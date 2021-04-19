@@ -1,3 +1,5 @@
+package engijava;
+
 public class Skill {
     private String skillName;
     private int basePower;
