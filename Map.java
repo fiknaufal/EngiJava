@@ -1,4 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Map {
@@ -11,9 +14,87 @@ public class Map {
     private Skillgacha sg;
     private gameState state;
 
-    public Map(int n, String namafile, int maxengi){}
+    public Map(int n, String namafile, int maxengi){
+        try {
+            File myObj = new File(namafile);
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                mapMatrix.add(myReader.nextLine());
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        while (wildEngi.size() < maxengi){
+            addEngi();
+        }
 
-    public void addEngi(){}
+        Firemon f = new Firemon(3900, 0, 0);
+        Firemon f1 = new Firemon(3200, 0, 0);
+        Electricmon e = new Electricmon(3200, 0, 0);
+        Electricmon e1 = new Electricmon(3200, 0, 0);
+        WaterGroundmon w = new WaterGroundmon(3200, 0, 0);
+        player.addEngimon(f);
+        player.addEngimon(e);
+        player.addEngimon(f1);
+        player.addEngimon(e1);
+        player.addEngimon(w);
+        level = n;
+        state = gameState.Jalan;
+    }
+
+    public void addEngi(){
+        int r = ThreadLocalRandom.current().nextInt(1, 31)*100;
+        int x = ThreadLocalRandom.current().nextInt(0, mapMatrix.get(0).length()), y = ThreadLocalRandom.current().nextInt(0, mapMatrix.size());
+        Engimon w;
+        Position p = new Position(x, y);
+
+        while(!nobodyThere(p)){
+            x =ThreadLocalRandom.current().nextInt(0, mapMatrix.get(0).length());
+            y = ThreadLocalRandom.current().nextInt(0, mapMatrix.size());
+            p.setX(x);
+            p.setY(y);
+        }
+
+        if (mapMatrix.get(y).charAt(x) == '+'){
+            int e1 =ThreadLocalRandom.current().nextInt(0, 4);
+            switch(e1){
+                case 0:
+                    w = new Watermon(r, x, y);
+                    break;
+                case 1:
+                    w = new Icemon(r, x, y);
+                    break;
+                case 2:
+                    w = new WaterIcemon(r, x, y);
+                    break;
+//                case 3:
+                default:
+                    w = new WaterGroundmon(r, x, y);
+                    break;
+            }
+            wildEngi.add(w);
+        } else if(mapMatrix.get(y).charAt(x) == '-'){
+            int e2 = ThreadLocalRandom.current().nextInt(0, 4);
+            switch(e2){
+                case 0:
+                    w = new Firemon(r, x, y);
+                    break;
+                case 1:
+                    w = new Groundmon(r, x, y);
+                    break;
+                case 2:
+                    w = new Electricmon(r, x, y);
+                    break;
+//                case 3:
+                default:
+                    w = new FireElectricmon(r, x, y);
+                    break;
+            }
+            wildEngi.add(w);
+        }
+    }
 
     public void gameFlow(){}
 
@@ -119,35 +200,6 @@ public class Map {
     }
 
 }
-
-//        Map::Map(int n, string namafile, int maxengi) : sg(){
-//
-//        fstream mapfile;
-//        mapfile.open(namafile,ios::in);
-//        if (mapfile.is_open()){
-//        string line;
-//        while(getline(mapfile, line)){
-//        mapMatrix.insert(mapMatrix.begin(), line);
-//        }
-//        }
-//        wildEngi.reserve(10);
-//        while (wildEngi.size() < maxengi){
-//        addEngi();
-//        }
-//
-//        Firemon f(3900, 0, 0);
-//        Firemon f1(3200, 0, 0);
-//        Electricmon e(3200, 0, 0);
-//        Electricmon e1(3200, 0, 0);
-//        WaterGroundmon w(3200, 0, 0);
-//        player.addEngimon(f);
-//        player.addEngimon(e);
-//        player.addEngimon(f1);
-//        player.addEngimon(e1);
-//        player.addEngimon(w);
-//        level = n;
-//        this->state = Jalan;
-//        }
 //
 //        void Map::gameFlow(){
 //        string cmd;
@@ -295,56 +347,6 @@ public class Map {
 //        }
 //        }
 //        }
-//        }
-//        }
-//
-//        void Map::addEngi(){
-//        int r = (rand()%30 + 1)*100;
-//        int x = rand()%mapMatrix[0].length(), y = rand()%mapMatrix.size();
-//        Engimon* w;
-//        Position p(x, y);
-//
-//        while(!nobodyThere(p)){
-//        x = rand()%mapMatrix[0].length();
-//        y = rand()%mapMatrix.size();
-//        p.setX(x);
-//        p.setY(y);
-//        }
-//
-//        if (mapMatrix[y][x] == '+'){
-//        int e1 = rand()%4;
-//        switch(e1){
-//        case 0:
-//        w = new Watermon(r, x, y);
-//        break;
-//        case 1:
-//        w = new Icemon(r, x, y);
-//        break;
-//        case 2:
-//        w = new WaterIcemon(r, x, y);
-//        break;
-//        case 3:
-//        w = new WaterGroundmon(r, x, y);
-//        break;
-//        }
-//        wildEngi.push_back(*w);
-//        } else if(mapMatrix[y][x] == '-'){
-//        int e2 = rand()%4;
-//        switch(e2){
-//        case 0:
-//        w = new Firemon(r, x, y);
-//        break;
-//        case 1:
-//        w = new Groundmon(r, x, y);
-//        break;
-//        case 2:
-//        w = new Electricmon(r, x, y);
-//        break;
-//        case 3:
-//        w = new FireElectricmon(r, x, y);
-//        break;
-//        }
-//        wildEngi.push_back(*w);
 //        }
 //        }
 
