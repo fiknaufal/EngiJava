@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class Player {
 
@@ -292,7 +293,39 @@ public class Player {
 //    void Player::petEngi(){
 //        inventoryE.getVector()[idActiveEngimon].printSound();
 //    }
-//
+
+
+    // Fungsi gelud
+    public boolean battle(Engimon e) {
+        int powerE1 = 0;
+        int powerE2 = 0;
+        Engimon pEngi = inventoryE.getArray().get(idActiveEngimon);
+
+        for (int i=0; i<pEngi.getSkill().size(); i++)
+            powerE1 += pEngi.getSkill().get(i).getBasePower() * pEngi.getSkill().get(i).getMasteryLevel();
+
+        for (int i=0; i<e.getSkill().size(); i++) 
+            powerE2 = e.getSkill().get(i).getBasePower() * e.getSkill().get(i).getMasteryLevel();
+
+        powerE1 += pEngi.getLevel() * pEngi.getElmtAdv(e);
+        powerE2 += e.getLevel() * e.getElmtAdv(pEngi);
+
+        if (powerE1 < powerE2) {
+            if (pEngi.decreaseHealth() == 0)
+                inventoryE.removeAtIdx(idActiveEngimon);
+            return false;
+        }
+
+        else {
+            pEngi.plusExp(50);
+            if (pEngi.getCml() >= 4000) {
+                inventoryE.removeAtIdx(idActiveEngimon);
+                setActiveEngi(0);
+                System.out.println("Active Engimon mati karena melampaui batas level maksimal!\nActive Engimon sekarang adalah Engimon teratas di list.");
+            }
+            return true;
+        }
+    }
 //    bool Player::battle(Engimon e) {
 //        int powerE1 = 0;
 //        int powerE2 = 0;
@@ -322,6 +355,9 @@ public class Player {
 //        return (powerE1 >= powerE2);
 //    }
 //
+
+    // Fungsi kawin
+    public void breedEngimon (int idxA, int idxB) {}
 //    // fungsi breeding
 //// Tinggal digabungin ke class player jg, nnt anaknya langsung dimasukin ke list aj, kgk usah jd output
 //    void Player::breedEngimon (int idxA, int idxB) {
