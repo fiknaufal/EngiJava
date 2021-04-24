@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.Scanner;
 
 public class Player {
 
@@ -358,7 +359,180 @@ public class Player {
 //
 
     // Fungsi kawin
-    public void breedEngimon (int idxA, int idxB) {}
+    public void breedEngimon (int idxA, int idxB) {
+
+        // Cek level ortu
+        if ((inventoryE.getArray().get(idxA).getLevel() < 4) && (inventoryE.getArray().get(idxB).getLevel() < 4)) {
+            System.out.println("Level Engimon belum cukup");
+            return;
+        }
+
+        // Cek inventory
+        else if (this.getInvCount() > maxInv) {
+            System.out.println("Inventory penuh");
+            return;
+        }
+
+        // Nyalin engimon ortu
+        Engimon engiA = new Engimon(inventoryE.getArray().get(idxA));
+        engiA.setElement2(Element.NONE);
+        Engimon engiB = new Engimon(inventoryE.getArray().get(idxB));
+        engiA.setElement2(Element.NONE);
+        
+        // Nentuin elemen anak
+        Element[] childElmt = {Element.NONE, Element.NONE};
+        String spc, sound;
+        if (engiA.getElmtAdv(engiB) > 1) {
+            childElmt[0] = engiA.getElement1();
+            spc = engiA.getSpecies();
+            sound = engiA.getSound();
+        }
+        else if (engiB.getElmtAdv(engiA) > 1) {
+            childElmt[0] = engiB.getElement1();
+            spc = engiB.getSpecies();
+            sound = engiB.getSound();
+        }
+        else {
+            if (engiA.getElement1() == engiB.getElement1()) {
+                childElmt[0] = engiA.getElement1();
+                spc = engiA.getSpecies();
+                sound = engiA.getSound();
+            }
+            else {
+                childElmt[0] = engiA.getElement1().ordinal() > engiB.getElement1().ordinal() ? engiA.getElement1() : engiB.getElement1();
+                childElmt[1] = engiA.getElement1().ordinal() < engiB.getElement1().ordinal() ? engiA.getElement1() : engiB.getElement1();
+                if (childElmt[0] == Element.FIRE) {
+                    spc = "FireElectricmon";
+                }
+                else {
+                    if (childElmt[1] == Element.ICE) {
+                        spc = "WaterIcemon";
+                    }
+                    else {
+                        spc = "WaterGroundmon";
+                    }
+                }
+                sound = engiA.getSound();
+            }
+        }
+
+        // Masukin nama
+        String childName;
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Your new engimon name: ");
+        childName = sc.nextLine();
+        sc.close();
+
+        // Buat objek Engimon baru dgn element dan nama di atas
+        Engimon anak = new Engimon(childName, engiA.getName(), engiB.getName(), engiA.getSpecies(), engiB.getSpecies(), spc, 100, childElmt[0], childElmt[1], -1, -1, sound, 3);
+
+        // Masukin skill-skill nya
+        Vector<Skill> skillsA = new Vector<Skill>(engiA.getSkill());
+        Vector<Skill> skillsB = new Vector<Skill>(engiB.getSkill());
+
+        // Singkirin skill yang g kompatibel
+        //// Buang skill dr skillsA
+        int i = 0;
+        while ((!skillsA.isEmpty()) && (i< skillsA.size())) {
+            boolean compatible = false;
+            for (Element e : skillsA.get(i).getElement()) {
+                if ((e == childElmt[0]) || (e == childElmt[1]))
+                    compatible = true;
+            }
+
+            if (!compatible) {
+                skillsA.remove(i);
+            }
+            else {
+                i++;
+            }
+        }
+
+        //// Buang skill dr skillsA
+        i = 0;
+        while ((!skillsB.isEmpty()) && (i< skillsB.size())) {
+            boolean compatible = false;
+            for (Element e : skillsB.get(i).getElement()) {
+                if ((e == childElmt[0]) || (e == childElmt[1]))
+                    compatible = true;
+            }
+
+            if (!compatible) {
+                skillsB.remove(i);
+            }
+            else {
+                i++;
+            }
+        }
+
+        //// Masukin ke engimon anak
+        while ((anak.getSkill().size() <= 4) && (!skillsA.isEmpty() || !skillsB.isEmpty())) {
+            int skillAIdx = -1;
+            if (!skillsA.isEmpty()) {
+                for(i=0; i<skillsA.size(); i++) {
+                    if (skillAIdx == -1) {
+                        skillAIdx = i;
+                    }
+                    else if (skillsA.get(i).getMasteryLevel() > skillsA.get(skillAIdx).getMasteryLevel()) {
+                        skillAIdx = i;
+                    }
+                }
+            }
+
+            int skillBIdx = -1;
+            if (!skillsB.isEmpty()) {
+                for(i=0; i<skillsB.size(); i++) {
+                    if (skillBIdx == -1) {
+                        skillBIdx = i;
+                    }
+                    else if (skillsB.get(i).getMasteryLevel() > skillsB.get(skillBIdx).getMasteryLevel()) {
+                        skillBIdx = i;
+                    }
+                }
+            }
+
+            if ((skillBIdx > -1) && (skillAIdx > -1)) {
+
+                if (skillsA.get(skillAIdx).getMasteryLevel() > skillsB.get(skillBIdx).getMasteryLevel()) {
+                    anak.addSkill(skillsA.get(skillAIdx));
+                    skillsA.remove(skillAIdx); //(skillsA.begin() + skillAIdx);
+                }
+                else if (skillsA.get(skillAIdx).getMasteryLevel() < skillsB.get(skillBIdx).getMasteryLevel()) {
+                    anak.addSkill(skillsB.get(skillBIdx));
+                    skillsB.remove(skillBIdx);//erase(skillsB.begin() + skillBIdx);
+                }
+                else {
+                    if (skillsA.get(skillAIdx) == skillsB.get(skillBIdx)) {
+                        Skill upgradedSkill = skillsA.get(skillAIdx);
+                        upgradedSkill.masteryLevelUp();
+                        anak.addSkill(upgradedSkill);
+                        skillsA.remove(skillAIdx); //erase(skillsA.begin() + skillAIdx);
+                        skillsB.remove(skillBIdx); //erase(skillsB.begin() + skillBIdx);
+                    }
+                    else {
+                        anak.addSkill(skillsA.get(skillAIdx));
+                        skillsA.remove(skillAIdx); // erase(skillsA.begin() + skillAIdx);
+                    }
+                }
+            }
+
+            else {
+                if (skillAIdx > -1) {
+                    anak.addSkill(skillsA.get(skillAIdx));
+                    skillsA.remove(skillAIdx); // erase(skillsA.begin() + skillAIdx);
+                }
+
+                else {
+                    anak.addSkill(skillsB.get(skillBIdx));
+                    skillsB.remove(skillBIdx); // erase(skillsB.begin() + skillBIdx);
+                }
+            }
+            // Tambahin anak ke list
+            addEngimon(anak);
+            inventoryE.getArray().get(idxA).setLevelAfterBreeding();
+            inventoryE.getArray().get(idxB).setLevelAfterBreeding();
+        }
+    }
 //    // fungsi breeding
 //// Tinggal digabungin ke class player jg, nnt anaknya langsung dimasukin ke list aj, kgk usah jd output
 //    void Player::breedEngimon (int idxA, int idxB) {
