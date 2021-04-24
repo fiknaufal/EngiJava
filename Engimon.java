@@ -1,16 +1,16 @@
 public class Engimon {
     protected Vector<Skill> skill;
 
-    private String name;
-    private String[] parentNames;
-    private String[] parentSpecies;
-    private String species;
-    private Element[] elements;
-    private String sound;
-    private static int maxExp;
-    private int exp;
-    private int cumulativeExp;
-    private Position engimonPos; //Class Positionnya belum?
+    protected String name;
+    protected String[] parentNames;
+    protected String[] parentSpecies;
+    protected String species;
+    protected Element[] elements;
+    protected String sound;
+    protected static int maxExp;
+    protected int exp;
+    protected int cumulativeExp;
+    protected Position engimonPos; //Class Positionnya belum?
 
     public Engimon(String names, String p1name, String p2name, String p1spc, String p2spc, String spc, int expr, Element e1, Element e2, int px, int py, String sounds) {
         //Versi C++: Engimon(string names, string p1name, string p2name, string p1spc, string p2spc, string spc, int expr, Element e1, Element e2, int px, int py, string sounds) : engimonPos(px, py)
