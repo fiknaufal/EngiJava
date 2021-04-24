@@ -37,5 +37,6 @@ public class Main {
         System.out.println(") |  __/| | (_| | |_| | | | | | (_| |_ _ _");
         System.out.println(" |_|   |_|\\__,_|\\__, |_|_| |_|\\__, (_|_|_)");
         System.out.println();
+        sc.close();
     }
 }

@@ -1,15 +1,15 @@
 public class Groundmon extends Engimon {
     public Groundmon(String name, String p1name, String p2name, String p1spc, String p2spc, int exp, int px, int py) {
-        super(name, p1name, p2name, p1spc, p2spc,"Groundmon", exp, Elements.GROUND, Elements.NONE, px, py, "BUMBUMMM");
+        super(name, p1name, p2name, p1spc, p2spc,"Groundmon", exp, Element.GROUND, Element.NONE, px, py, "BUMBUMMM");
 
         SkillGacha sg = new SkillGacha();
-        skill = sg.getSkillGen(Elements.GROUND, Elements.NONE);
+        skill = sg.getSkillGen(Element.GROUND, Element.NONE);
     }
 
     public Groundmon(int x, int px, int py) {
-        super("Wild Groundmon", "Groundmon Ibu", "Groundmon Ibu juga", "Groundmon", "Groundmon", "Groundmon", x, Elements.GROUND, Elements.NONE, px, py, "BUMBUMMM");
+        super("Wild Groundmon", "Groundmon Ibu", "Groundmon Ibu juga", "Groundmon", "Groundmon", "Groundmon", x, Element.GROUND, Element.NONE, px, py, "BUMBUMMM");
 
         SkillGacha sg = new SkillGacha();
-        skill = sg.getSkillGen(Elements.GROUND, Elements.NONE);
+        skill = sg.getSkillGen(Element.GROUND, Element.NONE);
     }
 }

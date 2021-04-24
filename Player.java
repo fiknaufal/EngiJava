@@ -245,7 +245,7 @@ public class Player {
     public void showSkillItemList(){
         int j = 1;
         System.out.println("List of Skill Item");
-        ArrayList<Engimon> e = inventoryE.getArray();
+        ArrayList<SkillItem> e = inventoryS.getArray();
         for(int i = 0; i < e.size(); i++){
             System.out.printf("%d. %s lv. %d\n", j, e.get(i).getSkill().getSkillName(), e.get(i).getJumlah());
             j++;
