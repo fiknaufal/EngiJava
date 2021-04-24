@@ -26,7 +26,7 @@ public class Main {
         // jalan game
         map = new Map(level, "Map.txt", jumlah);
         map.gameFlow();
-        System.out.println()
+        System.out.println();
         System.out.println("  _____ _                 _           __");
         System.out.println(" |_   _| |__   __ _ _ __ | | _____   / _| ___  _ __");
         System.out.println("   | | | '_ \\ / _` | '_ \\| |/ / __| | |_ / _ \\| '__|");
@@ -36,6 +36,6 @@ public class Main {
         System.out.println(" | |_) | |/ _` | | | | | '_ \\ / _` |");
         System.out.println(") |  __/| | (_| | |_| | | | | | (_| |_ _ _");
         System.out.println(" |_|   |_|\\__,_|\\__, |_|_| |_|\\__, (_|_|_)");
-        System.out.println()
+        System.out.println();
     }
 }
