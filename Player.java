@@ -38,36 +38,36 @@ public class Player {
 //    }
 //
     public void showActiveEngimon(){
-        inventoryE.getVector()[idActiveEngimon].printData();
+        inventoryE.getElement(idActiveEngimon).printData();
     }
 //    void Player::showActiveEngimon(){
 //        inventoryE.getVector()[idActiveEngimon].printData();
 //    }
 //
     public void showEngimon(int idx){
-        inventoryE.getVector()[idx].printData();
+        inventoryE.getElement(idx).printData();
     }
 //    void Player::showEngimon(int idx){
 //        inventoryE.getVector()[idx].printData();
 //    }
 //
     public void Move(String c){
-        inventoryE.getVector()[idActiveEngimon].setEngimonPos(playerPos.getX(), playerPos.getY());
+        inventoryE.getElement(idActiveEngimon).setEngimonPos(playerPos.getX(), playerPos.getY());
         if (c == "w"){
-            int curY = this->playerPos.getY();
-            this->playerPos.setY(curY+1);
+            int curY = playerPos.getY();
+            playerPos.setY(curY+1);
         }
         if (c == "a"){
-            int curX = this->playerPos.getX();
-            this->playerPos.setX(curX-1);
+            int curX = playerPos.getX();
+            playerPos.setX(curX-1);
         }
         if (c == "s"){
-            int curY = this->playerPos.getY();
-            this->playerPos.setY(curY-1);
+            int curY = playerPos.getY();
+            playerPos.setY(curY-1);
         }
         if (c == "d"){
-            int curX = this->playerPos.getX();
-            this->playerPos.setX(curX+1);
+            int curX = playerPos.getX();
+            playerPos.setX(curX+1);
         }
     }
 //    void Player::Move(const string &c){
@@ -91,7 +91,7 @@ public class Player {
 //    }
 //
     public void getActivePos(){
-        return inventoryE.getVector()[idActiveEngimon].getEngimonPos();
+        return inventoryE.getElement(idActiveEngimon).getEngimonPos();
     }
 //    Position Player::getActivePos(){
 //        return inventoryE.getVector()[idActiveEngimon].getEngimonPos();
@@ -99,7 +99,7 @@ public class Player {
 //
     public void MoveActiveEngi(){
         int x = playerPos.getX(), y = playerPos.getY(), x1 = x, y1 = y-1;
-        bool outidx = false, obstacle = false;
+        boolean outidx = false, obstacle = false;
         if(x1 < 0 || x1 > 14 || y1 < 0 || y1 > 14/* || obstacle()*/){ // bawah gabisa
             outidx = true;
             y1 = y+1;
@@ -117,7 +117,7 @@ public class Player {
             System.out.print("anjir dikepung");
         }
         else{
-            inventoryE.getVector()[idActiveEngimon].setEngimonPos(x1, y1);
+            inventoryE.getElement(idActiveEngimon).setEngimonPos(x1, y1);
         }
         if(outidx){
 //            throw "bambang mau kemana sih\n"; belom jadi wkwk
@@ -161,7 +161,7 @@ public class Player {
         int n = 0;
         ArrayList<SkillItem> v = inventoryS.getArray();
         for(int i = 0; i < v.size(); i++){
-            n += v[i].getJumlah();
+            n += inventoryS.getElement(i).getJumlah();
         }
         return inventoryE.getSize() + n;
     }
@@ -197,7 +197,7 @@ public class Player {
 //
     public boolean addSkillItem(SkillItem s){
         if(getInvCount() < maxInv){
-            inventoryS.getArray().add(s);
+            inventoryS.add(s);
             return true;
         }
         else{
@@ -224,9 +224,12 @@ public class Player {
     public void showEngimonList(){
         int j = 1;
         System.out.println("List of Engimon");
-        ArrayList<Engimon> e = inventoryE.getArray();
+//        ArrayList<Engimon> e = inventoryE.getArray();
+        Engimon engi;
         for(int i = 0; i < e.size(); i++){
-            System.out.printf("%d. %s %s lv. %d\n", j, e.get(i).getName(), e.get(i).getSpecies(), e.get(i).getLevel());
+            engi = inventoryE.getElement(i);
+            System.out.printf("%d. %s %s lv. %d\n", j, engi.getName(), engi.getSpecies(), engi.getLevel());
+//            System.out.printf("%d. %s %s lv. %d\n", j, e.get(i).getName(), e.get(i).getSpecies(), e.get(i).getLevel());
             j++;
         }
     }
@@ -259,7 +262,7 @@ public class Player {
 //    }
 //
     public void useSkillItem(int idxsi, int idxengi){
-        inventoryS.getArray().get(idxsi).learnSkill(inventoryE.getArray().get(idxengi));
+        inventoryS.getElement(idxsi).learnSkill(inventoryE.getElement(idxengi));
         updateSkillItem();
     }
 //    void Player::useSkillItem(int idxsi, int idxengi){
@@ -288,7 +291,7 @@ public class Player {
 //    }
 //
     public void petEngi(){
-        inventoryE.getArray().get(idActiveEngimon).printSound();
+        inventoryE.getElement(idActiveEngimon).printSound();
     }
 //    void Player::petEngi(){
 //        inventoryE.getVector()[idActiveEngimon].printSound();
@@ -299,7 +302,7 @@ public class Player {
     public boolean battle(Engimon e) {
         int powerE1 = 0;
         int powerE2 = 0;
-        Engimon pEngi = inventoryE.getArray().get(idActiveEngimon);
+        Engimon pEngi = inventoryE.getElement(idActiveEngimon);
 
         for (int i=0; i<pEngi.getSkill().size(); i++)
             powerE1 += pEngi.getSkill().get(i).getBasePower() * pEngi.getSkill().get(i).getMasteryLevel();
@@ -547,6 +550,17 @@ public class Player {
 //        }
 //    }
 //
+    public void updateSkillItem(){
+        int i = 0;
+        while(i < inventoryS.getSize()){
+            if(inventoryS.getElement(i).getJumlah() == 0){
+                inventoryS.removeAtIdx(i);
+            }
+            else{
+                i++;
+            }
+        }
+    }
 //    void Player::updateSkillItem(){
 //        int i = 0;
 //        while(i < inventoryS.getSize()){
