@@ -1,3 +1,6 @@
+import java.util.Vector;
+import java.util.Scanner;
+
 public class Engimon {
     protected Vector<Skill> skill;
 
@@ -11,7 +14,32 @@ public class Engimon {
     protected int exp;
     protected int cumulativeExp;
     protected Position engimonPos; //Class Positionnya belum?
+    protected int health;
 
+    // Constructor dengan parameter health
+    public Engimon(String names, String p1name, String p2name, String p1spc, String p2spc, String spc, int expr, Element e1, Element e2, int px, int py, String sounds, int health) {
+        //Versi C++: Engimon(string names, string p1name, string p2name, string p1spc, string p2spc, string spc, int expr, Element e1, Element e2, int px, int py, string sounds) : engimonPos(px, py)
+        //Initializernya langsung aku tambahin di bawah jadi engimonPos.setX(px) sama engimonPos.setY(py)
+        //Kayanya ini masih belum sepenuhnya tertranslasikan ke Java
+        name = names;
+        parentNames = new String[2];
+        parentNames[0] = p1name;
+        parentNames[1] = p2name;
+        parentSpecies = new String[2];
+        parentSpecies[0] = p1spc;
+        parentSpecies[1] = p2spc;
+        exp = expr;
+        elements = new Element[2];
+        elements[0] = e1;
+        elements[1] = e2;
+        sound = sounds;
+        species = spc;
+        engimonPos.setX(px);
+        engimonPos.setY(py);
+        this.health = health;
+    }
+
+    // Constructor tanpa parameter health
     public Engimon(String names, String p1name, String p2name, String p1spc, String p2spc, String spc, int expr, Element e1, Element e2, int px, int py, String sounds) {
         //Versi C++: Engimon(string names, string p1name, string p2name, string p1spc, string p2spc, string spc, int expr, Element e1, Element e2, int px, int py, string sounds) : engimonPos(px, py)
         //Initializernya langsung aku tambahin di bawah jadi engimonPos.setX(px) sama engimonPos.setY(py)
@@ -24,13 +52,14 @@ public class Engimon {
         parentSpecies[0] = p1spc;
         parentSpecies[1] = p2spc;
         exp = expr;
-        elements = new String[2];
+        elements = new Element[2];
         elements[0] = e1;
         elements[1] = e2;
         sound = sounds;
         species = spc;
         engimonPos.setX(px);
         engimonPos.setY(py);
+        this.health = 1;
     }
 
     public Engimon(final Engimon other){
@@ -48,7 +77,7 @@ public class Engimon {
         sound = other.sound;
         species = other.species;
         engimonPos = other.engimonPos;
-        this->skill = other.skill;
+        this.skill = other.skill;
     }
 
     public int getLevel(){
@@ -64,10 +93,10 @@ public class Engimon {
         //Sama kayak tadi, adanya final bukan const.
         double[][] tabelAdv = {{0, 0, 0, 0, 0 ,0}, {0,1,0,1,0.5,2}, {0,2,1,0,1,1}, {0,1,2,1,0,1.5}, {0,1.5,1,2,1,0}, {0,0,1,0.5,2,1}};
         double[] adv = new double[4];
-        adv[0] = tabelAdv[elements[0]][lawan.elements[0]];
-        adv[1] = tabelAdv[elements[0]][lawan.elements[1]];
-        adv[2] = tabelAdv[elements[1]][lawan.elements[0]];
-        adv[3] = tabelAdv[elements[1]][lawan.elements[1]];
+        adv[0] = tabelAdv[elements[0].ordinal()][lawan.elements[0].ordinal()];
+        adv[1] = tabelAdv[elements[0].ordinal()][lawan.elements[1].ordinal()];
+        adv[2] = tabelAdv[elements[1].ordinal()][lawan.elements[0].ordinal()];
+        adv[3] = tabelAdv[elements[1].ordinal()][lawan.elements[1].ordinal()];
 
         double max = 0;
         for(int i = 0; i < 4; i++){
@@ -101,9 +130,9 @@ public class Engimon {
     public void printSkills(){
         for(int i = 0; i< skill.size();i++){
             System.out.printf("Skill %d: \n",i+1);
-            System.out.printf("   Nama Skill: %s\n", skill[i].getSkillName());
-            System.out.printf("   Base Power: %d\n", skill[i].getBasePower());
-            System.out.printf("   Mastery   : %d\n", skill[i].getMasteryLevel());
+            System.out.printf("   Nama Skill: %s\n", skill.get(i).getSkillName());
+            System.out.printf("   Base Power: %d\n", skill.get(i).getBasePower());
+            System.out.printf("   Mastery   : %d\n", skill.get(i).getMasteryLevel());
         }
     }
 
@@ -112,7 +141,7 @@ public class Engimon {
         System.out.printf("Nama: %s\n", name);
         System.out.printf("Parent 1: %s species %s\n",parentNames[0],parentSpecies[0]);
         System.out.printf("Parent 2: %s species %s\n",parentNames[1],parentSpecies[1]);
-        System.out.printf("Element: %s/%s\n",getElementName(elements[0],getElementName(elements[1])));
+        System.out.printf("Element: %s/%s\n",getElementName(elements[0]),getElementName(elements[1]));
         System.out.printf("Level: %d\n", getLevel());
         System.out.printf("Experience: %d\n", exp%100);
         System.out.printf("Cumulative Experience: %d\n", cumulativeExp);
@@ -136,7 +165,7 @@ public class Engimon {
         if (skill.size() < 4){
             for (int i = 0; i < skill.size(); i++){
                 //versi C++: if(sk == skill[i])
-                if(sk.isEqual(skill[i])){
+                if(sk.isEqual(skill.get(i))){
                     System.out.println("Skill sudah dipelajari\n");
                     return false;
                 }
@@ -152,9 +181,11 @@ public class Engimon {
             Scanner input = new Scanner(System.in);
             int idxskill = input.nextInt();
 
-            System.out.printf("%s dihapus!\n", skill[idxskill-1].getSkillName());
+            System.out.printf("%s dihapus!\n", skill.get(idxskill-1).getSkillName());
             skill.remove(idxskill-1);
             skill.addElement(sk);
+
+            input.close();
             return true;
         }
     }
@@ -188,10 +219,10 @@ public class Engimon {
         char[] small = {'f','w','e','g','i'};
 
         if(exp/100 < n){
-            return small[elements[0]-1];
+            return small[elements[0].ordinal()-1];
         }
         else{
-            return big[elements[0]-1];
+            return big[elements[0].ordinal()-1];
         }
     }
 
@@ -243,5 +274,10 @@ public class Engimon {
         else{
             return "Gaada bang";
         }
+    }
+
+    public int decreaseHealth() {
+        health--;
+        return health;
     }
 }
