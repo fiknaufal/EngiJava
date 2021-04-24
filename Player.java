@@ -100,7 +100,7 @@ public class Player {
 //
     public void MoveActiveEngi(){
         int x = playerPos.getX(), y = playerPos.getY(), x1 = x, y1 = y-1;
-        boolean outidx = false, obstacle = false;
+        boolean outidx = false;
         if(x1 < 0 || x1 > 14 || y1 < 0 || y1 > 14/* || obstacle()*/){ // bawah gabisa
             outidx = true;
             y1 = y+1;

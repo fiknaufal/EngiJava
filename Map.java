@@ -11,7 +11,7 @@ public class Map {
     private Player player;
     private ArrayList<Engimon> wildEngi;
     private int level;
-    private Skillgacha sg;
+    private SkillGacha sg;
     private gameState state;
 
     public Map(int n, String namafile, int maxengi){
