@@ -8,11 +8,11 @@ public class SkillItem {
 
     }
 
-    public isEqual(final SkillItem s) {
+    public boolean isEqual(final SkillItem s) {
         return skill.isEqual(s.skill);
     }
 
-    public getSkill() {
+    public Skill getSkill() {
         return skill;
     }
 
@@ -21,13 +21,13 @@ public class SkillItem {
     }
 
     public void add(int n) {
-        return jumlah += n;
+        jumlah += n;
     }
 
     public void learnSkill(Engimon e) {
         boolean can = false;
         for(int i = 0; i < skill.getElement().size(); i++){
-            if (skill.getElement()[i] == e.getElement1() || skill.getElement()[i] == e.getElement2()) {
+            if (skill.getElement().get(i) == e.getElement1() || skill.getElement().get(i) == e.getElement2()) {
                 can = true;
             }
         }

@@ -1,16 +1,17 @@
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class Skill {
     private String skillName;
     private int basePower;
     private int masteryLevel;
-    private Vector<Element> elements;
+    private ArrayList<Element> elements;
 
     public Skill() {
         skillName = "Stand still";
         basePower = 10;
         masteryLevel = 1;
-        elements = new Vector<Element>();
+        elements = new ArrayList<Element>();
         elements.add(Element.FIRE);
         elements.add(Element.WATER);
         elements.add(Element.ELECTRIC);
@@ -47,7 +48,7 @@ public class Skill {
         return masteryLevel;
     }
 
-    public Vector<Element> getElement() {
+    public ArrayList<Element> getElement() {
         return elements;
     }
 
