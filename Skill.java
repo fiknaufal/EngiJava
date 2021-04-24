@@ -1,22 +1,24 @@
+import java.util.Vector;
+
 public class Skill {
     private String skillName;
     private int basePower;
     private int masteryLevel;
-    private Vector<Element>elements;
+    private Vector<Element> elements;
 
     public Skill() {
         skillName = "Stand still";
         basePower = 10;
         masteryLevel = 1;
         elements = new Vector<Element>();
-        elements.add(FIRE);
-        elements.add(WATER);
-        elements.add(ELECTRIC);
-        elements.add(GROUND);
-        elements.add(ICE);
+        elements.add(Element.FIRE);
+        elements.add(Element.WATER);
+        elements.add(Element.ELECTRIC);
+        elements.add(Element.GROUND);
+        elements.add(Element.ICE);
     }
 
-    public Skill(String sName, int bPower, int mLevel, String elmt) {
+    public Skill(String sName, int bPower, int mLevel, Element elmt) {
         skillName = sName;
         basePower = bPower;
         masteryLevel = mLevel;
@@ -29,7 +31,7 @@ public class Skill {
         masteryLevel = mLevel;
 
         for (int i = 0; i < elmts.size(); i++) {
-            elements.add(elmts[i]);
+            elements.add(elmts.get(i));
         }
     }
 
