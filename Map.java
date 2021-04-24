@@ -13,9 +13,29 @@ public class Map {
 
     public Map(int n, String namafile, int maxengi){}
 
-    public void show(){}
-
     public void addEngi(){}
+
+    public void gameFlow(){}
+
+    public void show(){
+        char[][] maps = new char[mapMatrix.size()][mapMatrix.get(0).length()];
+        for (int i = mapMatrix.size()-1; i >= 0; i--){
+            for (int j = 0; j < mapMatrix.get(0).length(); j++){
+                maps[i][j] = mapMatrix.get(i).charAt(j);
+            }
+        }
+        maps[player.getPlayerPos().getY()][player.getPlayerPos().getX()] = 'P';
+        maps[player.getActivePos().getY()][player.getActivePos().getX()] = 'X';
+        for(int i = 0; i < wildEngi.size(); i++){
+            maps[wildEngi.get(i).getEngimonPos().getY()][wildEngi.get(i).getEngimonPos().getX()] = wildEngi.get(i).getMapSymbol(level);
+        }
+        for (int i = mapMatrix.size()-1; i >= 0; i--){
+            for (int j = 0; j < mapMatrix.get(0).length(); j++){
+                System.out.print(maps[i][j]);
+            }
+            System.out.println();
+        }
+    }
 
     public void randomiseEnemyMovement(){
         int r, m;
@@ -30,9 +50,41 @@ public class Map {
         }
     }
 
-    public void gameFlow(){}
-    public int idSurroundEnemy(){}
-    public boolean isBattle(){}
+    public int idSurroundEnemy(){
+        for (int i = 0; i < wildEngi.size(); i++){
+            if (player.getPlayerPos().getY()+1 == wildEngi.get(i).getEngimonPos().getY() && player.getPlayerPos().getX() == wildEngi.get(i).getEngimonPos().getX()){
+                return i;
+            }
+            if (player.getPlayerPos().getY() == wildEngi.get(i).getEngimonPos().getY() && player.getPlayerPos().getX()+1 == wildEngi.get(i).getEngimonPos().getX()){
+                return i;
+            }
+            if (player.getPlayerPos().getY()-1 == wildEngi.get(i).getEngimonPos().getY() && player.getPlayerPos().getX() == wildEngi.get(i).getEngimonPos().getX()){
+                return i;
+            }
+            if (player.getPlayerPos().getY() == wildEngi.get(i).getEngimonPos().getY() && player.getPlayerPos().getX()-1 == wildEngi.get(i).getEngimonPos().getX()){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public boolean isBattle(){
+        for (int i = 0; i < wildEngi.size(); i++){
+            if (player.getPlayerPos().getY()+1 == wildEngi.get(i).getEngimonPos().getY() && player.getPlayerPos().getX() == wildEngi.get(i).getEngimonPos().getX()){
+                return true;
+            }
+            if (player.getPlayerPos().getY() == wildEngi.get(i).getEngimonPos().getY() && player.getPlayerPos().getX()+1 == wildEngi.get(i).getEngimonPos().getX()){
+                return true;
+            }
+            if (player.getPlayerPos().getY()-1 == wildEngi.get(i).getEngimonPos().getY() && player.getPlayerPos().getX() == wildEngi.get(i).getEngimonPos().getX()){
+                return true;
+            }
+            if (player.getPlayerPos().getY() == wildEngi.get(i).getEngimonPos().getY() && player.getPlayerPos().getX()-1 == wildEngi.get(i).getEngimonPos().getX()){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public boolean canEngimonWalk(Engimon e, Position p){
         Element e1 = e.getElement1(), e2 = e.getElement2();
@@ -95,10 +147,6 @@ public class Map {
 //        player.addEngimon(w);
 //        level = n;
 //        this->state = Jalan;
-//        }
-//
-//        Map::~Map(){
-//
 //        }
 //
 //        void Map::gameFlow(){
@@ -247,62 +295,6 @@ public class Map {
 //        }
 //        }
 //        }
-//        }
-//        }
-//
-//        bool Map::isBattle(){
-//        for (int i = 0; i < wildEngi.size(); i++){
-//        if (player.getPlayerPos().getY()+1 == wildEngi[i].getEngimonPos().getY() && player.getPlayerPos().getX() == wildEngi[i].getEngimonPos().getX()){
-//        return true;
-//        }
-//        if (player.getPlayerPos().getY() == wildEngi[i].getEngimonPos().getY() && player.getPlayerPos().getX()+1 == wildEngi[i].getEngimonPos().getX()){
-//        return true;
-//        }
-//        if (player.getPlayerPos().getY()-1 == wildEngi[i].getEngimonPos().getY() && player.getPlayerPos().getX() == wildEngi[i].getEngimonPos().getX()){
-//        return true;
-//        }
-//        if (player.getPlayerPos().getY() == wildEngi[i].getEngimonPos().getY() && player.getPlayerPos().getX()-1 == wildEngi[i].getEngimonPos().getX()){
-//        return true;
-//        }
-//        }
-//        return false;
-//        }
-//
-//        int Map::idSurroundEnemy(){
-//        for (int i = 0; i < wildEngi.size(); i++){
-//        if (player.getPlayerPos().getY()+1 == wildEngi[i].getEngimonPos().getY() && player.getPlayerPos().getX() == wildEngi[i].getEngimonPos().getX()){
-//        return i;
-//        }
-//        if (player.getPlayerPos().getY() == wildEngi[i].getEngimonPos().getY() && player.getPlayerPos().getX()+1 == wildEngi[i].getEngimonPos().getX()){
-//        return i;
-//        }
-//        if (player.getPlayerPos().getY()-1 == wildEngi[i].getEngimonPos().getY() && player.getPlayerPos().getX() == wildEngi[i].getEngimonPos().getX()){
-//        return i;
-//        }
-//        if (player.getPlayerPos().getY() == wildEngi[i].getEngimonPos().getY() && player.getPlayerPos().getX()-1 == wildEngi[i].getEngimonPos().getX()){
-//        return i;
-//        }
-//        }
-//        return -1;
-//        }
-//
-//        void Map::show(){
-//        char maps[mapMatrix.size()][mapMatrix[0].length()];
-//        for (int i = mapMatrix.size()-1; i >= 0; i--){
-//        for (int j = 0; j < mapMatrix[0].length(); j++){
-//        maps[i][j] = mapMatrix[i][j];
-//        }
-//        }
-//        maps[player.getPlayerPos().getY()][player.getPlayerPos().getX()] = 'P';
-//        maps[player.getActivePos().getY()][player.getActivePos().getX()] = 'X';
-//        for(int i = 0; i < wildEngi.size(); i++){
-//        maps[wildEngi[i].getEngimonPos().getY()][wildEngi[i].getEngimonPos().getX()] = wildEngi[i].getMapSymbol(level);
-//        }
-//        for (int i = mapMatrix.size()-1; i >= 0; i--){
-//        for (int j = 0; j < mapMatrix[0].length(); j++){
-//        cout << maps[i][j];
-//        }
-//        cout << endl;
 //        }
 //        }
 //

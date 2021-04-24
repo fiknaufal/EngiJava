@@ -90,7 +90,7 @@ public class Player {
 //        }
 //    }
 //
-    public void getActivePos(){
+    public Position getActivePos(){
         return inventoryE.getElement(idActiveEngimon).getEngimonPos();
     }
 //    Position Player::getActivePos(){
@@ -224,12 +224,10 @@ public class Player {
     public void showEngimonList(){
         int j = 1;
         System.out.println("List of Engimon");
-//        ArrayList<Engimon> e = inventoryE.getArray();
         Engimon engi;
-        for(int i = 0; i < e.size(); i++){
+        for(int i = 0; i < inventoryE.getSize(); i++){
             engi = inventoryE.getElement(i);
             System.out.printf("%d. %s %s lv. %d\n", j, engi.getName(), engi.getSpecies(), engi.getLevel());
-//            System.out.printf("%d. %s %s lv. %d\n", j, e.get(i).getName(), e.get(i).getSpecies(), e.get(i).getLevel());
             j++;
         }
     }
