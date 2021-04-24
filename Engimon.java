@@ -1,5 +1,3 @@
-package engijava;
-
 public class Engimon {
     protected Vector<Skill> skill;
 
@@ -16,7 +14,7 @@ public class Engimon {
 
     public Engimon(String names, String p1name, String p2name, String p1spc, String p2spc, String spc, int expr, Element e1, Element e2, int px, int py, String sounds) {
         //Versi C++: Engimon(string names, string p1name, string p2name, string p1spc, string p2spc, string spc, int expr, Element e1, Element e2, int px, int py, string sounds) : engimonPos(px, py)
-        //Ini ada ngeinherit dari engimonPos kah? Aku belum terlalu paham yang ini gaes, punten
+        //Initializernya langsung aku tambahin di bawah jadi engimonPos.setX(px) sama engimonPos.setY(py)
         //Kayanya ini masih belum sepenuhnya tertranslasikan ke Java
         name = names;
         parentNames = new String[2];
@@ -31,11 +29,26 @@ public class Engimon {
         elements[1] = e2;
         sound = sounds;
         species = spc;
+        engimonPos.setX(px);
+        engimonPos.setY(py);
     }
 
-    public Engimon(const Engimon other){
+    public Engimon(final Engimon other){
         //Versi C++: Engimon(const Engimon& other)
-        //Aku masih bingung ini implementasiinnya gmn. Perlu kah?
+        //Di java ga ada const, adanya final. Tapi masih aga beda juga sih. Cm sementara aku ake final yak
+        name = other.name;
+        parentNames[0] = other.parentNames[0];
+        parentNames[1] = other.parentNames[1];
+        parentSpecies[0] = other.parentSpecies[0];
+        parentSpecies[1] = other.parentSpecies[1];
+        exp = other.exp;
+        cumulativeExp = other.cumulativeExp;
+        elements[0] = other.elements[0];
+        elements[1] = other.elements[1];
+        sound = other.sound;
+        species = other.species;
+        engimonPos = other.engimonPos;
+        this->skill = other.skill;
     }
 
     public int getLevel(){
@@ -46,8 +59,9 @@ public class Engimon {
         return cumulativeExp;
     }
 
-    public double getElmtAdv(const Engimon lawan){
+    public double getElmtAdv(final Engimon lawan){
         //Versi C++: getElmtAdv(const Engimon& lawan)
+        //Sama kayak tadi, adanya final bukan const.
         double[][] tabelAdv = {{0, 0, 0, 0, 0 ,0}, {0,1,0,1,0.5,2}, {0,2,1,0,1,1}, {0,1,2,1,0,1.5}, {0,1.5,1,2,1,0}, {0,0,1,0.5,2,1}};
         double[] adv = new double[4];
         adv[0] = tabelAdv[elements[0]][lawan.elements[0]];
@@ -117,7 +131,7 @@ public class Engimon {
         }
     }
 
-    public boolean addSkill(Skill sk){
+    public boolean addSkill(final Skill sk){
         //Versi C++: addSkill(const Skill& sk)
         if (skill.size() < 4){
             for (int i = 0; i < skill.size(); i++){
@@ -186,7 +200,7 @@ public class Engimon {
     }
 
     public Position randomMove(int n){
-        int x = engimonPos.geteX();
+        int x = engimonPos.getX();
         int y = engimonPos.getY();
         Position p = new Position(x,y);
         if(n == 1){
@@ -208,22 +222,22 @@ public class Engimon {
         //Ini kalau egk salah jadi UPPERCASE semua karena sifat dari enum di Java
         //Mohon koreksinya
         //versi C++: Huruf pertama uppercase, setelahnya lowercase (ex: None, Fire,Electric)
-        if(e == NONE){
+        if(e == Element.NONE){
             return "NONE";
         }
-        if (e == FIRE){
+        if (e == Element.FIRE){
             return "FIRE";
         }
-        if (e == ELECTRIC){
+        if (e == Element.ELECTRIC){
             return "Electric";
         }
-        if (e == GROUND){
+        if (e == Element.GROUND){
             return "Ground";
         }
-        if (e == WATER){
+        if (e == Element.WATER){
             return "Water";
         } 
-        if (e == ICE){
+        if (e == Element.ICE){
             return "ICE";
         }
         else{

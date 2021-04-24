@@ -1,5 +1,3 @@
-package engijava;
-
 public enum Element {
     NONE, 
     FIRE, 
