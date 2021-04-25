@@ -53,7 +53,8 @@ public class Skill {
     }
 
     public void masteryLevelUp() {
-        masteryLevel++;
+        if (masteryLevel < 3)
+            masteryLevel++;
     }
 
     public boolean isEqual(Skill s) {

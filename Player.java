@@ -338,42 +338,24 @@ public class Player {
         Vector<Skill> skillsA = new Vector<Skill>(engiA.getSkill());
         Vector<Skill> skillsB = new Vector<Skill>(engiB.getSkill());
 
-        // Singkirin skill yang g kompatibel
-        //// Buang skill dr skillsA
-        int i = 0;
-        while ((!skillsA.isEmpty()) && (i< skillsA.size())) {
-            boolean compatible = false;
-            for (Element e : skillsA.get(i).getElement()) {
-                if ((e == childElmt[0]) || (e == childElmt[1]))
-                    compatible = true;
-            }
+        // Singkirin skill yang g kompatibel (UPDATE: G perlu lg)
+        
+        // Nentuin ngambil signature skill anak atau dari ortu
+        SkillGacha sg = new SkillGacha();
+        Skill signatureSkill = sg.getRandomSkill(childElmt[0], childElmt[1]);
+        boolean foundSignSkill = false;
+        int i=0;
 
-            if (!compatible) {
-                skillsA.remove(i);
-            }
-            else {
-                i++;
-            }
+        while ((i<4) && !foundSignSkill) {
+            if (signatureSkill.isEqual(skillsA.get(i)) || signatureSkill.isEqual(skillsB.get(i)))
+                foundSignSkill = true;
         }
+        
+        if (!foundSignSkill)
+            anak.addSkill(signatureSkill);
 
-        //// Buang skill dr skillsA
-        i = 0;
-        while ((!skillsB.isEmpty()) && (i< skillsB.size())) {
-            boolean compatible = false;
-            for (Element e : skillsB.get(i).getElement()) {
-                if ((e == childElmt[0]) || (e == childElmt[1]))
-                    compatible = true;
-            }
-
-            if (!compatible) {
-                skillsB.remove(i);
-            }
-            else {
-                i++;
-            }
-        }
-
-        //// Masukin ke engimon anak
+        // Masukin ke engimon anak
+        i=0;
         while ((anak.getSkill().size() <= 4) && (!skillsA.isEmpty() || !skillsB.isEmpty())) {
             int skillAIdx = -1;
             if (!skillsA.isEmpty()) {
@@ -410,7 +392,7 @@ public class Player {
                     skillsB.remove(skillBIdx);//erase(skillsB.begin() + skillBIdx);
                 }
                 else {
-                    if (skillsA.get(skillAIdx) == skillsB.get(skillBIdx)) {
+                    if (skillsA.get(skillAIdx).isEqual(skillsB.get(skillBIdx))) {
                         Skill upgradedSkill = skillsA.get(skillAIdx);
                         upgradedSkill.masteryLevelUp();
                         anak.addSkill(upgradedSkill);
