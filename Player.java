@@ -128,7 +128,19 @@ public class Player {
 
         @Override
         public int compare(Engimon o1, Engimon o2) {
-            return o1.getName().compareToIgnoreCase(o2.getName());
+            int step1 = o1.getElement1().compareTo(o2.getElement1());
+            if(step1 == 0){
+                int step2 = o1.getElement2().compareTo(o2.getElement2());
+                if(step2 == 0){
+                    int step3 = Integer.compare(o1.getLevel(), o2.getLevel());
+                    if(step3 == 0){
+                        return o1.getName().compareToIgnoreCase(o2.getName());
+                    }
+                    return step3;
+                }
+                return step2;
+            }
+            return step1;
         }
     }
 
@@ -167,16 +179,6 @@ public class Player {
             j++;
         }
     }
-//    // bikin get Name sama get Spesies di ENgimon lah wkwk
-//    void Player::showEngimonList(){
-//        int j = 1;
-//        cout << "List of Engimon" << endl;
-//        for(auto i = inventoryE.getVector().begin(); i!= inventoryE.getVector().end(); ++i){
-//            cout << j << ". " << i->getName() << " " << i->getSpecies() << " lv." << i->getLevel()<< endl;
-//            j++;
-//        }
-//    }
-//
     public void showSkillItemList(){
         int j = 1;
         System.out.println("List of Skill Item");
