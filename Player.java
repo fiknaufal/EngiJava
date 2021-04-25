@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Vector;
-import java.util.Scanner;
+import java.util.*;
 
 public class Player {
 
@@ -71,33 +69,11 @@ public class Player {
             playerPos.setX(curX+1);
         }
     }
-//    void Player::Move(const string &c){
-//        inventoryE.getVector()[idActiveEngimon].setEngimonPos(playerPos.getX(), playerPos.getY());
-//        if (c == "w"){
-//            int curY = this->playerPos.getY();
-//            this->playerPos.setY(curY+1);
-//        }
-//        if (c == "a"){
-//            int curX = this->playerPos.getX();
-//            this->playerPos.setX(curX-1);
-//        }
-//        if (c == "s"){
-//            int curY = this->playerPos.getY();
-//            this->playerPos.setY(curY-1);
-//        }
-//        if (c == "d"){
-//            int curX = this->playerPos.getX();
-//            this->playerPos.setX(curX+1);
-//        }
-//    }
-//
+
     public Position getActivePos(){
         return inventoryE.getElement(idActiveEngimon).getEngimonPos();
     }
-//    Position Player::getActivePos(){
-//        return inventoryE.getVector()[idActiveEngimon].getEngimonPos();
-//    }
-//
+
     public void MoveActiveEngi(){
         int x = playerPos.getX(), y = playerPos.getY(), x1 = x, y1 = y-1;
         boolean outidx = false;
@@ -124,40 +100,11 @@ public class Player {
 //            throw "bambang mau kemana sih\n"; belom jadi wkwk
         }
     }
-//    void Player::MoveActiveEngi(){ // cek obstacle belom jadi
-//        int x = playerPos.getX(), y = playerPos.getY(), x1 = x, y1 = y-1;
-//        bool outidx = false, obstacle = false;
-//        if(x1 < 0 || x1 > 14 || y1 < 0 || y1 > 14/* || obstacle()*/){ // bawah gabisa
-//            outidx = true;
-//            y1 = y+1;
-//        }
-//        if(x1 < 0 || x1 > 14 || y1 < 0 || y1 > 14){ // atas gabisa
-//            outidx = true;
-//            x1 = x-1;
-//            y1 = y;
-//        }
-//        if(x1 < 0 || x1 > 14 || y1 < 0 || y1 > 14){ // kiri gabisa
-//            outidx = true;
-//            x1 = x+1;
-//        }
-//        if(x1 < 0 || x1 > 14 || y1 < 0 || y1 > 14){ // kanan gabisa
-//            cout << "anjir dikepung";
-//        }
-//        else{
-//            inventoryE.getVector()[idActiveEngimon].setEngimonPos(x1, y1);
-//        }
-//        if(outidx){
-//            throw "bambang mau kemana sih\n";
-//        }
-//    }
-//
+
     public Position getPlayerPos(){
         return playerPos;
     }
-//    Position& Player::getPlayerPos(){
-//        return this->playerPos;
-//    }
-//
+
     public int getInvCount(){
         int n = 0;
         ArrayList<SkillItem> v = inventoryS.getArray();
@@ -167,61 +114,49 @@ public class Player {
         return inventoryE.getSize() + n;
     }
 
-//    int Player::getInvCount(){
-//        int n = 0;
-//        vector<SkillItem> v = inventoryS.getVector();
-//        for(int i = 0; i < v.size(); i++){
-//            n += v[i].getJumlah();
-//        }
-//        return inventoryE.getSize() + n;
-//    }
-//
-
     public boolean addEngimon(Engimon e){
         if(getInvCount() < maxInv){
             inventoryE.add(e);
+            inventoryE.getArray().sort(new EngimonSorter());
             return true;
         }
         else{
             return false;
         }
     }
-//    bool Player::addEngimon(Engimon e){
-//        if(getInvCount() < maxInv){
-//            inventoryE.add(e);
-//            return 1;
-//        }
-//        else{
-//            return 0;
-//        }
-//    }
-//
+    public class EngimonSorter implements Comparator<Engimon>{
+
+        @Override
+        public int compare(Engimon o1, Engimon o2) {
+            return o1.getName().compareToIgnoreCase(o2.getName());
+        }
+    }
+
     public boolean addSkillItem(SkillItem s){
         if(getInvCount() < maxInv){
-            inventoryS.add(s);
+            Optional<SkillItem> sa = inventoryS.getArray().stream().filter(o -> o.getSkill().isEqual(s.getSkill())).findAny();
+            if(sa.isPresent()){
+                sa.get().add(s.getJumlah());
+            }
+            else{
+                inventoryS.add(s);
+                inventoryS.getArray().sort(new SkillItemSorter());
+            }
             return true;
         }
         else{
             return false;
         }
     }
-//    bool Player::addSkillItem(SkillItem s){
-//        if(getInvCount() < maxInv){
-//            vector<SkillItem>::iterator i = find(inventoryS.getVector().begin(), inventoryS.getVector().end(), s);
-//
-//            if(i == inventoryS.getVector().end()){
-//                inventoryS.add(s);
-//            }
-//            else{
-//                i->add(1);
-//            }
-//            return 1;
-//        }
-//        else{
-//            return 0;
-//        }
-//    }
-//
+
+    public class SkillItemSorter implements Comparator<SkillItem>{
+
+        @Override
+        public int compare(SkillItem o1, SkillItem o2) {
+            return Integer.compare(o1.getSkill().getBasePower(), o2.getSkill().getBasePower());
+        }
+    }
+
     public void showEngimonList(){
         int j = 1;
         System.out.println("List of Engimon");

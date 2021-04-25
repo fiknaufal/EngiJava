@@ -24,6 +24,12 @@ public class Inventory<T> {
     public T getElement(int i){
         return list.get(i);
     }
+    public T getElement(T t){
+        return list.get(list.indexOf(t));
+    }
+    public boolean isExist(T t){
+        return list.contains(t);
+    }
 }
 //    private:
 //    vector<T> list;
