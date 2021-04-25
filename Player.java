@@ -2,54 +2,32 @@ import java.util.*;
 
 public class Player {
 
-//    Position playerPos;
-//    Inventory<Engimon> inventoryE;
-//    Inventory<SkillItem> inventoryS;
-//    int maxInv;
-//    // int banyakEngimon;
-//    int idActiveEngimon;
     private Position playerPos = new Position();
     private Inventory<Engimon> inventoryE = new Inventory<Engimon>();
     private Inventory<SkillItem> inventoryS = new Inventory<SkillItem>();
     private int maxInv;
     private int idActiveEngimon;
 
-//    Player::Player() : inventoryE(), inventoryS(){
-//        this->playerPos.setX(1);
-//        this->playerPos.setY(1);
-//        maxInv = 50;
-//        idActiveEngimon = 0;
-//    }
+
     public Player(){
         playerPos.setX(1);
         playerPos.setY(1);
         maxInv = 50;
         idActiveEngimon = 0;
     }
-//
-//    Player::~Player(){}
-//
+
     public boolean Lose(){
         return inventoryE.getSize() == 0;
     }
-//    bool Player::lose(){
-//        return inventoryE.getSize() == 0;
-//    }
-//
+
     public void showActiveEngimon(){
         inventoryE.getElement(idActiveEngimon).printData();
     }
-//    void Player::showActiveEngimon(){
-//        inventoryE.getVector()[idActiveEngimon].printData();
-//    }
-//
+
     public void showEngimon(int idx){
         inventoryE.getElement(idx).printData();
     }
-//    void Player::showEngimon(int idx){
-//        inventoryE.getVector()[idx].printData();
-//    }
-//
+
     public void Move(String c){
         inventoryE.getElement(idActiveEngimon).setEngimonPos(playerPos.getX(), playerPos.getY());
         if (c == "w"){
@@ -124,6 +102,11 @@ public class Player {
             return false;
         }
     }
+
+    public void removeEngimon(int i){
+        inventoryE.removeAtIdx(i);
+    }
+
     public class EngimonSorter implements Comparator<Engimon>{
 
         @Override
@@ -161,6 +144,18 @@ public class Player {
         }
     }
 
+    public boolean removeSkillItem(int idx, int n){
+        SkillItem sa = inventoryS.getElement(idx);
+        if(sa.getJumlah() < n){
+            return false;
+        }
+        else{
+            sa.add(-n);
+            updateSkillItem();
+            return true;
+        }
+    }
+
     public class SkillItemSorter implements Comparator<SkillItem>{
 
         @Override
@@ -179,6 +174,7 @@ public class Player {
             j++;
         }
     }
+
     public void showSkillItemList(){
         int j = 1;
         System.out.println("List of Skill Item");
@@ -188,25 +184,14 @@ public class Player {
             j++;
         }
     }
-//    void Player::showSkillItemList(){
-//        int j = 1;
-//        cout << "List of Skill Item" << endl;
-//        for(auto i = inventoryS.getVector().begin(); i != inventoryS.getVector().end(); ++i){
-//            cout << j << ". " << i->getSkill().getSkillName() << " " << i->getJumlah() << endl;
-//            j++;
-//        }
-//    }
-//
+
     public void useSkillItem(int idxsi, int idxengi){
         inventoryS.getElement(idxsi).learnSkill(inventoryE.getElement(idxengi));
         updateSkillItem();
     }
-//    void Player::useSkillItem(int idxsi, int idxengi){
-//        inventoryS.getVector()[idxsi].learnSkill(inventoryE.getVector()[idxengi]);
-//        updateSkillItem();
-//    }
-//
+
     public void setActiveEngi(int i){
+        inventoryE.getElement(idActiveEngimon).setEngimonPos(-1,-1);
         if (i < inventoryE.getSize()){
             idActiveEngimon = i;
         }
@@ -215,24 +200,10 @@ public class Player {
             idActiveEngimon = 0;
         }
     }
-//    void Player::setActiveEngi(int i){
-//        inventoryE.getVector()[idActiveEngimon].setEngimonPos(-1,-1);
-//        if (i < inventoryE.getSize()){
-//            idActiveEngimon = i;
-//        }
-//        else{
-//            cout << "Id tidak valid, set Active Engimon pada Engimon pertama list" << endl;
-//            idActiveEngimon = 0;
-//        }
-//    }
-//
+
     public void petEngi(){
         inventoryE.getElement(idActiveEngimon).printSound();
     }
-//    void Player::petEngi(){
-//        inventoryE.getVector()[idActiveEngimon].printSound();
-//    }
-
 
     // Fungsi gelud
     public boolean battle(Engimon e) {
@@ -670,16 +641,4 @@ public class Player {
             }
         }
     }
-//    void Player::updateSkillItem(){
-//        int i = 0;
-//        while(i < inventoryS.getSize()){
-//            if(inventoryS.getElement(i).getJumlah() == 0){
-//                inventoryS.removeAtIdx(i);
-//            }
-//            else{
-//                i++;
-//            }
-//        }
-//    }
-
 }
