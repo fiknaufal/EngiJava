@@ -5,7 +5,7 @@ public class Skill {
     private String skillName;
     private int basePower;
     private int masteryLevel;
-    private ArrayList<Element> elements;
+    private ArrayList<Element> elements = new ArrayList<>();
 
     public Skill() {
         skillName = "Stand still";

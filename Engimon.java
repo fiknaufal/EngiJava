@@ -13,7 +13,7 @@ public class Engimon {
     protected static int maxExp;
     protected int exp;
     protected int cumulativeExp;
-    protected Position engimonPos; //Class Positionnya belum?
+    protected Position engimonPos = new Position(); //Class Positionnya belum?
     protected int health;
 
     // Constructor dengan parameter health

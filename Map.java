@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -7,12 +8,20 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Map {
     public enum gameState{ Jalan, Battle, Bag, Exit}
 
-    private ArrayList<String> mapMatrix;
-    private Player player;
-    private ArrayList<Engimon> wildEngi;
+    private ArrayList<String> mapMatrix = new ArrayList<>();
+    private Player player = new Player();
+    private ArrayList<Engimon> wildEngi = new ArrayList<>();;
     private int level;
-    private SkillGacha sg;
+    private SkillGacha sg = new SkillGacha();
     private gameState state;
+
+    public void gameFlow(){
+        show();
+    }
+
+    public void showGUI(Graphics g){
+
+    }
 
     public Map(int n, String namafile, int maxengi){
         try {
@@ -95,8 +104,6 @@ public class Map {
             wildEngi.add(w);
         }
     }
-
-    public void gameFlow(){}
 
     public void show(){
         char[][] maps = new char[mapMatrix.size()][mapMatrix.get(0).length()];
