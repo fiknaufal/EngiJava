@@ -12,6 +12,7 @@ public class Map {
     private Player player = new Player();
     private ArrayList<Engimon> wildEngi = new ArrayList<>();;
     private int level;
+    private int round = 0;
     private SkillGacha sg = new SkillGacha();
     private gameState state;
 
@@ -24,6 +25,7 @@ public class Map {
                 this.state = gameState.Battle;
             }
             if (state == gameState.Jalan) {
+                round++;
                 show();
                 printMenu();
                 cmd = sc.nextLine();
@@ -32,6 +34,7 @@ public class Map {
                 }
             }
         }
+        sc.close();
     }
 
     public void showGUI(Graphics g){
@@ -141,14 +144,28 @@ public class Map {
     }
 
     public void randomiseEnemyMovement(){
-        int r, m;
+        int i, r, m;
         Position p;
-        for(int i = 0; i < wildEngi.size(); i++){
+
+        i=0;
+        while(i < wildEngi.size()){
             r = ThreadLocalRandom.current().nextInt(1, 5);
             m = ThreadLocalRandom.current().nextInt(0, 3);
             p = wildEngi.get(i).randomMove(r);
             if(m==0 && isInMap(p) && canEngimonWalk(wildEngi.get(i), p) && nobodyThere(p)){
                 wildEngi.get(i).setEngimonPos(p.getX(), p.getY());
+                if (round % 10 == 0) {
+                    boolean deadAfterGrow = wildEngi.get(i).plusExp(10);
+                    if (deadAfterGrow) {
+                        wildEngi.remove(i);
+                    }
+                    else {
+                        i++;
+                    }
+                }
+                else {
+                    i++;
+                }
             }
         }
     }

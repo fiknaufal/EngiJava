@@ -149,7 +149,7 @@ public class Engimon {
         System.out.println("");
     }
 
-    public void plusExp(int i){
+    public boolean plusExp(int i){
         //Ini padanan throw apaan ya gaes?
         //Aku ubah pake print dulu
         exp += i;
@@ -157,7 +157,9 @@ public class Engimon {
         if(cumulativeExp >= maxExp){
             //Versi c++: throw "mati bosku";
             System.out.println("mati bosku");
+            return true;
         }
+        return false;
     }
 
     public boolean addSkill(final Skill sk){
