@@ -15,8 +15,23 @@ public class Map {
     private SkillGacha sg = new SkillGacha();
     private gameState state;
 
-    public void gameFlow(){
-        show();
+    public void gameFlow() {
+
+        String cmd;
+        Scanner sc = new Scanner(System.in);
+        while (state != gameState.Exit && !player.lose()) {
+            if (isBattle()) {
+                this.state = gameState.Battle;
+            }
+            if (state == gameState.Jalan) {
+                show();
+                printMenu();
+                cmd = sc.nextLine();
+                if(cmd.compareToIgnoreCase("exit") == 0){
+                    this.state = gameState.Exit;
+                }
+            }
+        }
     }
 
     public void showGUI(Graphics g){
@@ -204,6 +219,21 @@ public class Map {
 
     public boolean isInMap(Position p){
         return p.getX() >= 0 && p.getX() < mapMatrix.get(0).length() && p.getY() >= 0 && p.getY() < mapMatrix.size();
+    }
+
+    public void printMenu(){
+        System.out.println("\n");
+        System.out.println("--------------------");
+        System.out.println("Available Commands:");
+        System.out.println("1. w,a,s,d: Move\n2. bag: Open Bag\n3. show: Show Active Engimon\n4. pet: Pet Active Engimon\n5. exit: Exit the game");
+        System.out.println("--------------------");
+        System.out.println("command: ");
+    }
+
+    public void printBag(){
+        System.out.println("--------------------");
+        System.out.println("1. engimons: show engimons\n2. skillItems: show skill items\n3. chooseActive: pilih active engimon\n4. breed: Breed Engimon\n5. learn: Learn Skill\n6. close: close bag");
+        System.out.println("command: ");
     }
 
 }

@@ -16,7 +16,7 @@ public class Player {
         idActiveEngimon = 0;
     }
 
-    public boolean Lose(){
+    public boolean lose(){
         return inventoryE.getSize() == 0;
     }
 
@@ -107,6 +107,9 @@ public class Player {
         inventoryE.removeAtIdx(i);
     }
 
+    public void changeEngimonName(int idx, String name){
+        inventoryE.getElement(idx).setName(name);
+    }
     public class EngimonSorter implements Comparator<Engimon>{
 
         @Override

@@ -198,6 +198,10 @@ public class Engimon {
         return name;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+
     public String getSpecies(){
         return species;
     }
