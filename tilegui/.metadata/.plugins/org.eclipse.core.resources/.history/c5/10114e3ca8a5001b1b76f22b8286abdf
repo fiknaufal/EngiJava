@@ -1,0 +1,32 @@
+package data;
+
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+
+import static org.lwjgl.opengl.GL11.*;
+import static helpers.Artist.*;
+
+public class Boot {
+	
+	public Boot() {
+		BeginSession();
+
+		
+		while (!Display.isCloseRequested()) {
+			for (int i = 0; i < 12; i++) {
+				for (int j = 0; j < 12; j++) {
+					DrawQuad(i*50+1, j*50+1, 48, 48);
+				}
+			}
+			
+			Display.update();
+			Display.sync(60);
+		}
+		Display.destroy();
+	}
+	
+	public static void main (String[] args) {
+		new Boot();
+	}
+}

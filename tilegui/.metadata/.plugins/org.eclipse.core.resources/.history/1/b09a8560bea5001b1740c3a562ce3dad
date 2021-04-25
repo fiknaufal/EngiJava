@@ -1,0 +1,37 @@
+package data;
+
+import org.lwjgl.input.Keyboard;
+
+public class Player {
+	private float x;
+	private float y;
+	
+	public Player(float x, float y) {
+		this.x = x;
+		this.y = y;
+	}
+	
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	
+	public void move() {
+		if (Keyboard.getEventKey() == Keyboard.KEY_UP) {
+			this.y--;
+		}
+		if (Keyboard.getEventKey() == Keyboard.KEY_DOWN) {
+			this.y++;
+		}
+		if (Keyboard.getEventKey() == Keyboard.KEY_LEFT) {
+			this.x--;
+		}
+		if (Keyboard.getEventKey() == Keyboard.KEY_RIGHT) {
+			this.x++;
+		}
+	}
+	
+}

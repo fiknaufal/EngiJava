@@ -1,0 +1,6 @@
+INDEX VERSION 1.131+C:\Users\Fikri Naufal\Documents\sem_4\oop\Tubes\tilegui\.metadata\.plugins\org.eclipse.jdt.core
+1961428036.index
+3348138855.index
+641367428.index
+1605782492.index
+2684109906.index
