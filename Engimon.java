@@ -124,7 +124,7 @@ public class Engimon {
     }
 
     public void setLevelAfterBreeding(){
-        exp -= 100*30;
+        exp -= 100*3;
     }
     
     public void printSkills(){
