@@ -43,6 +43,13 @@ public class Main {
                 e.printStackTrace();
             }
         }
+
+        try {
+            SaveLoad.Load("a.txt");
+        } catch (FileNotFoundException e) {
+            System.out.println("File Save tidak ditemukan. Mohon periksa kembali nama file anda!");
+            e.printStackTrace();
+        }
         //END OF TEST
         
         map.gameFlow();

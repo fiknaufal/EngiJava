@@ -8,6 +8,7 @@ public class SaveLoad {
     private static Engimon engiPlayer;
     private static Player player = new Player();
     private static ArrayList<Engimon> wildEngiList = new ArrayList<>();
+    private static ArrayList<String> mapCells = new ArrayList<>();
     
 
     public SaveLoad(){}
@@ -359,10 +360,10 @@ public class SaveLoad {
 
         //Add cell(s)
         System.out.println("Bentuk map:");
-        ArrayList<String> mapMatrix = new ArrayList<>();
+        // ArrayList<String> mapMatrix = new ArrayList<>();
         while (countCells < ncells) {
-            mapMatrix.add(myReader.nextLine());
-            System.out.println(mapMatrix.get(countCells));
+            mapCells.add(myReader.nextLine());
+            System.out.println(mapCells.get(countCells));
             countCells++;
         }
         System.out.println("****end of map****\n");
@@ -572,6 +573,7 @@ public class SaveLoad {
 
 
         //Ntar diganti sama constructor yang manggil data-data dari Load
-        return new Map(5, "Map.txt", 5); //DUMMY DATA
+        System.out.println("Cek!");
+        return new Map(mapCells, player, wildEngiList, levelPembeda, round); //DUMMY DATA
     }
 }

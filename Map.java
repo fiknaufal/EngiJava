@@ -278,6 +278,15 @@ public class Map {
         return state;
     }
 
+    public Map(ArrayList<String> loadMap, Player loadPlayer, ArrayList<Engimon> loadWildEngi, int loadLevel, int loadRound) {
+        mapMatrix = loadMap;
+        player = loadPlayer;
+        wildEngi = loadWildEngi;
+        level = loadLevel;
+        round = loadRound;
+        state = gameState.Jalan;
+    }
+
 }
 //
 //        void Map::gameFlow(){
