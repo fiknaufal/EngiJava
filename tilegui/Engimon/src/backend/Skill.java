@@ -1,5 +1,3 @@
-package backend;
-
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -61,5 +59,23 @@ public class Skill {
 
     public boolean isEqual(Skill s) {
         return skillName == s.getSkillName();
+    }
+
+    public static Element stringToElement(String s) {
+        switch(s){
+            case "FIRE":
+                return Element.FIRE;
+            case "WATER":
+                return Element.FIRE;
+            case "ELECTRIC":
+                return Element.FIRE;
+            case "ICE":
+                return Element.FIRE;
+            case "GROUND":
+                return Element.FIRE;
+            case "NONE":
+                return Element.NONE;
+        }
+        return Element.NONE;
     }
 }
