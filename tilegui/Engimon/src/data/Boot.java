@@ -3,10 +3,14 @@ package data;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.TrueTypeFont;
+import java.awt.Font;
 import java.io.IOException;
 
 import static helpers.Artist.*;
@@ -185,13 +189,13 @@ public class Boot {
 				}
 			}
 			if(gameState == 4) {//bag
-				System.out.println(gameState);
 				p.menuUpdate();
 				int pilihan = p.enter();
 				int state = p.getMenu() % 5;
 				if(pilihan != -1) {
 					if(state == 0) {
 						// show engimon
+						p.resetMenu();
 						gameState = 8;
 					}
 					else if(state == 1) {
@@ -234,7 +238,6 @@ public class Boot {
 						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
 					}
 				}
-				System.out.println(gameState);
 			}
 			if(gameState == 5) {//active Engimon
 				tmainmenu = LoadTexture("res/blacks.png", "PNG");
@@ -253,12 +256,30 @@ public class Boot {
 			if(gameState == 7) {//save error
 				tmainmenu = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				TrueTypeFont font;
+		    	Font awtFont = new Font("Times New Roman", Font.BOLD, 50); //name, style (PLAIN, BOLD, or ITALIC), size
+		    	font = new TrueTypeFont(awtFont, false);
+		    	
+		    	
+		    	font.drawString((float) 600, (float) 400, "Save Error", Color.white);
+		    	if(p.anyKeyDown()) {
+		    		gameState = 1;
+		    	}
 				
 			}
 			if(gameState == 8) {//show engimon
+				p.menuUpdate();
+				int pilihan = p.enter();
+				int state = p.getMenu() % map.getPlayer().getEngimonCount();
 				tmainmenu = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
-				
+				if(pilihan == -1) {
+					map.getPlayer().showEngimonList(state);
+				}
+				else {
+					// show engimon data
+					gameState = 12;
+				}
 			}
 			if(gameState == 9) {//show skill items
 				tmainmenu = LoadTexture("res/blacks.png", "PNG");

@@ -1,8 +1,12 @@
 package backend;
 
+import java.awt.Font;
 import java.util.*;
 
 import org.lwjgl.input.Keyboard;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.TrueTypeFont;
+
 
 public class Player implements Grafik {
 
@@ -104,14 +108,25 @@ public class Player implements Grafik {
     }
 
     public int getInvCount(){
-        int n = 0;
+        return getEngimonCount() + getSkillItemCount();
+    }
+
+    public int getEngimonCount() {
+    	return inventoryE.getSize();
+    }
+    
+    public int getSkillItemCount() {
+    	int n = 0;
         ArrayList<SkillItem> v = inventoryS.getArray();
         for(int i = 0; i < v.size(); i++){
             n += inventoryS.getElement(i).getJumlah();
         }
-        return inventoryE.getSize() + n;
+        return n;
     }
-
+    
+    public int getUniqueSkillItem() {
+    	return inventoryS.getSize();
+    }
     public boolean addEngimon(Engimon e){
         if(getInvCount() < maxInv){
             inventoryE.add(e);
@@ -204,6 +219,11 @@ public class Player implements Grafik {
 //    }
     
     public void showEngimonList(int idx){
+    	TrueTypeFont font;
+    	Font awtFont = new Font("Times New Roman", Font.BOLD, 24); //name, style (PLAIN, BOLD, or ITALIC), size
+    	font = new TrueTypeFont(awtFont, false);
+    	
+    	
         int j = 1;
         String s = "(dipilih)";
         System.out.println("List of Engimon");
@@ -211,10 +231,10 @@ public class Player implements Grafik {
         for(int i = 0; i < inventoryE.getSize(); i++){
             engi = inventoryE.getElement(i);
             if(i == idx) {
-            	System.out.printf("%d. %s %s lv. %d %s\n", j, engi.getName(), engi.getSpecies(), engi.getLevel(), s);
+            	font.drawString((float) 500, (float) 300 + i*25, String.format("%d. %s %s lv. %d %s\n", j, engi.getName(), engi.getSpecies(), engi.getLevel(), s), Color.white);
             }
             else {
-            	System.out.printf("%d. %s %s lv. %d\n", j, engi.getName(), engi.getSpecies(), engi.getLevel());
+            	font.drawString((float) 500, (float) 300 + i*25, String.format("%d. %s %s lv. %d\n", j, engi.getName(), engi.getSpecies(), engi.getLevel()), Color.white);
             }
             j++;
         }
