@@ -239,6 +239,9 @@ public class Boot {
 			if(gameState == 5) {//active Engimon
 				tmainmenu = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				map.getPlayer().showActiveEngimon();
+				if (p.esc() != -1)
+					gameState = 3;
 				
 			}
 			if(gameState == 6) {// pet sound
