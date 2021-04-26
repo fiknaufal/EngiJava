@@ -20,15 +20,17 @@ public class Boot {
 	private int gameState;
 	private Map map;
 	private SaveLoad save =  new SaveLoad();
+	private boolean lose;
 	
 	public Boot() {
 		BeginSession();
 		map = new Map(0, "Map", 10);
 		gameState = 0;
+		lose = false;
 		
 		Texture t, tplayer, tmainmenu;
 		Pointer p = new Pointer();
-		while (!Display.isCloseRequested()) {
+		while (!Display.isCloseRequested() && lose == false) {
 			if (gameState == 0) {//menu utama
 				p.update();
 				if (p.getIndex() == 0) {
@@ -107,12 +109,35 @@ public class Boot {
 				if (p.getIndex() == 0) {
 					tmainmenu = LoadTexture("res/bfi.png", "PNG");
 					DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+					map.getWildEngi().get(map.idSurroundEnemy()).printData();
+					t = LoadTexture(map.getWildEngi().get(map.idSurroundEnemy()).getIcon(), "PNG");
+					DrawQuadTex(t, 500, 250, 64, 64);
 				}else {
 					tmainmenu = LoadTexture("res/br.png", "PNG");
 					DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+					map.getWildEngi().get(map.idSurroundEnemy()).printData();
+					t = LoadTexture(map.getWildEngi().get(map.idSurroundEnemy()).getIcon(), "PNG");
+					DrawQuadTex(t, 500, 250, 64, 64);
 				}
 				int jawab = p.enter();
 				if (jawab == 0) {
+					if (map.getPlayer().battle(map.getWildEngi().get(map.idSurroundEnemy()))) {
+						if(map.getPlayer().addEngimon(map.getWildEngi().get(map.idSurroundEnemy()))) {
+							SkillItem si = new SkillItem(map.getWildEngi().get(map.idSurroundEnemy()).getSkill().get(0), 1);
+							map.getPlayer().addSkillItem(si);
+						}
+						map.getWildEngi().remove(map.idSurroundEnemy());
+						map.addEngi();
+					}else {
+						if (!map.getPlayer().lose()) {
+							map.getWildEngi().remove(map.idSurroundEnemy());
+							map.addEngi();
+						}
+						else {
+							lose = true;
+						}
+					}
+					gameState = 1;
 					gameState = 1;
 					//battle
 				}

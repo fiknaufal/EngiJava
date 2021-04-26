@@ -286,8 +286,11 @@ public class Player implements Grafik {
         powerE2 += e.getLevel() * e.getElmtAdv(pEngi);
 
         if (powerE1 < powerE2) {
-            if (pEngi.decreaseHealth() == 0)
-                inventoryE.removeAtIdx(idActiveEngimon);
+            if (pEngi.decreaseHealth() == 0) {
+            	inventoryE.removeAtIdx(idActiveEngimon);
+	            setActiveEngi(0);
+            }
+
             return false;
         }
 
