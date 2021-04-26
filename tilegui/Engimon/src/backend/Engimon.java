@@ -3,6 +3,10 @@ package backend;
 import java.util.Vector;
 import java.util.Scanner;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.TrueTypeFont;
+import java.awt.Font;
+
 public class Engimon implements Grafik {
     protected Vector<Skill> skill;
 
@@ -141,17 +145,32 @@ public class Engimon implements Grafik {
     }
 
     public void printData(){
-        //Ini juga mungkin perlu disesuaiin sama GUI
-        System.out.printf("Nama: %s\n", name);
-        System.out.printf("Parent 1: %s species %s\n",parentNames[0],parentSpecies[0]);
-        System.out.printf("Parent 2: %s species %s\n",parentNames[1],parentSpecies[1]);
-        System.out.printf("Element: %s/%s\n",getElementName(elements[0]),getElementName(elements[1]));
-        System.out.printf("Level: %d\n", getLevel());
-        System.out.printf("Experience: %d\n", exp%100);
-        System.out.printf("Cumulative Experience: %d\n", cumulativeExp);
-        printSkills();
-        System.out.println("");
+    	TrueTypeFont font;
+    	Font awtFont = new Font("Times New Roman", Font.BOLD, 24); //name, style (PLAIN, BOLD, or ITALIC), size
+    	font = new TrueTypeFont(awtFont, false);
+    	
+    	
+    	font.drawString((float) 500, (float) 300, "Nama: "+name, Color.white);
+    	font.drawString((float) 500, (float) 325, "Parent 1: "+ parentNames[0] + "species "+parentSpecies[0], Color.white);
+    	font.drawString((float) 500, (float) 350, "Parent 1: "+ parentNames[1] + "species "+parentSpecies[1], Color.white);
+    	font.drawString((float) 500, (float) 375, "Element: "+getElementName(elements[0]) +"/"+getElementName(elements[1]), Color.white);
+    	font.drawString((float) 500, (float) 400, "Level: "+getLevel(), Color.white);
+    	font.drawString((float) 500, (float) 425, "Experience: "+exp%100, Color.white);
+    	font.drawString((float) 500, (float) 450, "Cumulative Experience: "+cumulativeExp, Color.white);
+       
     }
+//    public void printData(){
+//        //Ini juga mungkin perlu disesuaiin sama GUI
+//        System.out.printf("Nama: %s\n", name);
+//        System.out.printf("Parent 1: %s species %s\n",parentNames[0],parentSpecies[0]);
+//        System.out.printf("Parent 2: %s species %s\n",parentNames[1],parentSpecies[1]);
+//        System.out.printf("Element: %s/%s\n",getElementName(elements[0]),getElementName(elements[1]));
+//        System.out.printf("Level: %d\n", getLevel());
+//        System.out.printf("Experience: %d\n", exp%100);
+//        System.out.printf("Cumulative Experience: %d\n", cumulativeExp);
+//        printSkills();
+//        System.out.println("");
+//    }
 
     public boolean plusExp(int i){
         //Ini padanan throw apaan ya gaes?

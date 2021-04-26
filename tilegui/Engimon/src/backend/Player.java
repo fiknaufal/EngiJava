@@ -185,13 +185,30 @@ public class Player implements Grafik {
         }
     }
 
-    public void showEngimonList(){
+//    public void showEngimonList(){
+//        int j = 1;
+//        System.out.println("List of Engimon");
+//        Engimon engi;
+//        for(int i = 0; i < inventoryE.getSize(); i++){
+//            engi = inventoryE.getElement(i);
+//            System.out.printf("%d. %s %s lv. %d\n", j, engi.getName(), engi.getSpecies(), engi.getLevel());
+//            j++;
+//        }
+//    }
+    
+    public void showEngimonList(int idx){
         int j = 1;
+        String s = "(dipilih)";
         System.out.println("List of Engimon");
         Engimon engi;
         for(int i = 0; i < inventoryE.getSize(); i++){
             engi = inventoryE.getElement(i);
-            System.out.printf("%d. %s %s lv. %d\n", j, engi.getName(), engi.getSpecies(), engi.getLevel());
+            if(i == idx) {
+            	System.out.printf("%d. %s %s lv. %d %s\n", j, engi.getName(), engi.getSpecies(), engi.getLevel(), s);
+            }
+            else {
+            	System.out.printf("%d. %s %s lv. %d\n", j, engi.getName(), engi.getSpecies(), engi.getLevel());
+            }
             j++;
         }
     }

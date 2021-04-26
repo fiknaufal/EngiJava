@@ -84,6 +84,12 @@ public class Boot {
 						
 					}
 				}
+				int menu = p.esc();
+				if(menu != -1) {
+//					map.getPlayer().showEngimon(0);
+					p.resetMenu();
+					gameState = 3;
+				}
 				if (map.isBattle()) {
 					gameState = 2;
 				}
@@ -108,7 +114,37 @@ public class Boot {
 					map.addEngi();
 				}
 			}
-
+			if(gameState == 3) {
+				p.menuUpdate();
+				int pilihan = p.enter();
+				if(pilihan != -1) {
+					switch(p.getMenu() % 4) {
+					case 0:
+						// open bag
+					case 1:
+						// show ative engimon
+					case 2:
+						// pet
+					case 3:
+						// exit
+						
+					}
+				}
+				else {
+					switch(p.getMenu() % 4) {
+					case 0:
+						// render open bag
+					case 1:
+						// render show ative engimon
+					case 2:
+						// render pet
+					case 3:
+						// render exit
+						
+					}
+				}
+				gameState = 0;
+			}
 			Display.update();
 			Display.sync(60);
 		}
