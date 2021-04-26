@@ -6,12 +6,16 @@ import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.opengl.Texture;
 
 import static org.lwjgl.opengl.GL11.*;
+
+import java.io.IOException;
+
 import static helpers.Artist.*;
 import backend.*;
 
 public class Boot {
 	private int gameState;
 	private Map map;
+	private SaveLoad save =  new SaveLoad();
 	
 	public Boot() {
 		BeginSession();
@@ -21,7 +25,7 @@ public class Boot {
 		Texture t, tplayer, tmainmenu;
 		Pointer p = new Pointer();
 		while (!Display.isCloseRequested()) {
-			if (gameState == 0) {
+			if (gameState == 0) {//menu utama
 				p.update();
 				if (p.getIndex() == 0) {
 					tmainmenu = LoadTexture("res/mainpil1.png", "PNG");
@@ -41,7 +45,7 @@ public class Boot {
 
 			}
 			
-			if (gameState == 1) {
+			if (gameState == 1) {//map
 				t = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(t, 0, 0, 2000, 960);
 				if(map.getPlayer().Move(map.getMapMatrix().size()-1, map.getMapMatrix().get(0).length()-1)) {
@@ -94,7 +98,7 @@ public class Boot {
 					gameState = 2;
 				}
 			}
-			if (gameState == 2) {
+			if (gameState == 2) {//battle
 				p.update();
 				if (p.getIndex() == 0) {
 					tmainmenu = LoadTexture("res/bfi.png", "PNG");
@@ -114,62 +118,90 @@ public class Boot {
 					map.addEngi();
 				}
 			}
-			if(gameState == 3) {
+			if(gameState == 3) {//menu dalem game
 				p.menuUpdate();
 				int pilihan = p.enter();
-				int state = p.getMenu() % 4;
+				int state = p.getMenu() % 6;
 				if(pilihan != -1) {
 					gameState = 1;
-//					switch(state) {
-//					case 0:
-//						// open bag
-//					case 1:
-//						// show ative engimon
-//					case 2:
-//						// pet
-//					case 3:
-//						// exit
-//						gameState = 1;
-//						
-//					}
+					if(state == 0) {
+						// open bag
+						gameState = 4;
+					}
+					else if(state == 1) {
+						// show active engimon
+						gameState = 5;
+					}
+					else if(state == 2) {
+						// pet
+						gameState = 6;
+					}
+					else if(state == 3) {
+						// exit
+						gameState = 0;
+					}
+					else if(state == 4) {
+						// save
+						try {
+							save.Save(map, "savefile.txt");
+						}
+						catch(IOException e) {
+							// kasih pesan error
+							gameState = 7;
+						}
+						gameState = 0;
+					}
+					else if(state == 5) {
+						// return
+						gameState = 1;
+					}
 				}
 				else {
 					if(state == 0) {
-						tmainmenu = LoadTexture("res/mb.png", "PNG");
+						tmainmenu = LoadTexture("res/mb2.png", "PNG");
 						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
 					}
 					else if(state == 1) {
-						tmainmenu = LoadTexture("res/ms.png", "PNG");
+						tmainmenu = LoadTexture("res/ms2.png", "PNG");
 						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
 					}
 					else if(state == 2) {
-						tmainmenu = LoadTexture("res/mp.png", "PNG");
+						tmainmenu = LoadTexture("res/mp2.png", "PNG");
 						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
 					}
 					else if(state == 3) {
-						tmainmenu = LoadTexture("res/me.png", "PNG");
+						tmainmenu = LoadTexture("res/me2.png", "PNG");
 						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
 					}
-//					switch(state) {
-//					case 0:
-//						// render open bag
-//						tmainmenu = LoadTexture("res/mb.png", "PNG");
-//						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
-//					case 1:
-//						// render show active engimon
-//						tmainmenu = LoadTexture("res/ms.png", "PNG");
-//						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
-//					case 2:
-//						// render pet
-//						tmainmenu = LoadTexture("res/mp.png", "PNG");
-//						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
-//					case 3:
-//						// render exit
-//						tmainmenu = LoadTexture("res/me.png", "PNG");
-//						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
-//					}
+					else if(state == 4) {
+						tmainmenu = LoadTexture("res/msa2.png", "PNG");
+						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+					}
+					else if(state == 5) {
+						tmainmenu = LoadTexture("res/mr2.png", "PNG");
+						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+					}
 				}
-//				gameState = 0;
+			}
+			if(gameState == 4) {//bag
+				tmainmenu = LoadTexture("res/black.png", "PNG");
+				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				
+			}
+			if(gameState == 5) {//active Engimon
+				tmainmenu = LoadTexture("res/black.png", "PNG");
+				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				
+			}
+			if(gameState == 6) {// pet sound
+				tmainmenu = LoadTexture("res/black.png", "PNG");
+				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				
+			}
+			if(gameState == 7) {//save error
+				tmainmenu = LoadTexture("res/black.png", "PNG");
+				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				
 			}
 			Display.update();
 			Display.sync(500);
