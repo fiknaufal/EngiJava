@@ -314,4 +314,29 @@ public class Engimon implements Grafik {
     public String getIcon() {
         return icon;
     }
+
+    //CONSTRUCTOR buat LOAD
+    public Engimon(String names, String p1name, String p2name, String p1spc, String p2spc, String spc, int expr, Element e1, Element e2, int px, int py, String sounds, int health, int cumExp, int maxXp) {
+        //Versi C++: Engimon(string names, string p1name, string p2name, string p1spc, string p2spc, string spc, int expr, Element e1, Element e2, int px, int py, string sounds) : engimonPos(px, py)
+        //Initializernya langsung aku tambahin di bawah jadi engimonPos.setX(px) sama engimonPos.setY(py)
+        //Kayanya ini masih belum sepenuhnya tertranslasikan ke Java
+        name = names;
+        parentNames = new String[2];
+        parentNames[0] = p1name;
+        parentNames[1] = p2name;
+        parentSpecies = new String[2];
+        parentSpecies[0] = p1spc;
+        parentSpecies[1] = p2spc;
+        exp = expr;
+        elements = new Element[2];
+        elements[0] = e1;
+        elements[1] = e2;
+        sound = sounds;
+        species = spc;
+        engimonPos.setX(px);
+        engimonPos.setY(py);
+        this.health = health;
+        cumulativeExp = cumExp;
+        maxExp = maxXp;
+    }
 }

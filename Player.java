@@ -450,6 +450,12 @@ public class Player implements Grafik{
     public int getIdActiveEngimon() {
         return idActiveEngimon;
     }
+
+    //Setter buat SaveLoad
+    public void setPlayerPos(int x, int y) {
+        playerPos.setX(x);
+        playerPos.setY(y);
+    }
 //    // fungsi breeding
 //// Tinggal digabungin ke class player jg, nnt anaknya langsung dimasukin ke list aj, kgk usah jd output
 //    void Player::breedEngimon (int idxA, int idxB) {
