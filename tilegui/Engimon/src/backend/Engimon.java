@@ -71,6 +71,7 @@ public class Engimon implements Grafik {
         species = spc;
         engimonPos.setX(px);
         engimonPos.setY(py);
+        icon = "res/eevee.png";
         this.health = 1;
         
         skill = new Vector<Skill>();
@@ -94,6 +95,7 @@ public class Engimon implements Grafik {
         sound = other.sound;
         species = other.species;
         engimonPos = other.engimonPos;
+        icon = "res/eevee.png";
         this.skill = other.skill;
         
         skill = new Vector<Skill>(other.skill);
