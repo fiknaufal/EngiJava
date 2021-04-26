@@ -46,7 +46,12 @@ public class Boot {
 					gameState = 1;
 				}
 				if (jawab == 1) {
-					//load
+					try {
+						SaveLoad.Load("savefile.txt");
+					} catch (FileNotFoundException e) {
+						System.out.println("File Save tidak ditemukan. Mohon periksa kembali nama file anda!");
+						e.printStackTrace();
+					}
 					gameState = 1;
 				}
 
