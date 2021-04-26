@@ -74,4 +74,8 @@ public class Pointer {
 	public char keyChar() {
 		return Keyboard.getEventCharacter();
 	}
+	
+	public String keyName(char c) {
+		return Keyboard.getKeyName(c);
+	}
 }

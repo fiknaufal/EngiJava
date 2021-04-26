@@ -443,20 +443,10 @@ public class Boot {
 				}
 			}
 			if (gameState ==15) {
-				Character c = null;
-				
-				if (p.anyKeyDown())
-					c = p.keyChar();
-				
-				map.getPlayer().showAnakName(c);
-				
-				if (p.enter() != -1 && (!map.getPlayer().childName.isEmpty())) {
-					map.getPlayer().breedEngimon(map.getPlayer().firstBreedEngi, map.getPlayer().secondBreedEngi);
-					map.getPlayer().firstBreedEngi = -1;
-					map.getPlayer().secondBreedEngi = -1;
-					map.getPlayer().childName = "";
-					gameState = 3;
-				}
+				map.getPlayer().breedEngimon(map.getPlayer().firstBreedEngi, map.getPlayer().secondBreedEngi);
+				map.getPlayer().firstBreedEngi = -1;
+				map.getPlayer().secondBreedEngi = -1;
+				gameState = 3;
 			}
 			Display.update();
 			Display.sync(10);
