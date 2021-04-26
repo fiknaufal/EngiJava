@@ -1,7 +1,7 @@
 import java.util.Vector;
 import java.util.Scanner;
 
-public class Engimon {
+public class Engimon implements Grafik {
     protected Vector<Skill> skill;
 
     protected String name;
@@ -15,6 +15,7 @@ public class Engimon {
     protected int cumulativeExp;
     protected Position engimonPos = new Position(); //Class Positionnya belum?
     protected int health;
+    protected String icon;
 
     // Constructor dengan parameter health
     public Engimon(String names, String p1name, String p2name, String p1spc, String p2spc, String spc, int expr, Element e1, Element e2, int px, int py, String sounds, int health) {
@@ -37,6 +38,7 @@ public class Engimon {
         engimonPos.setX(px);
         engimonPos.setY(py);
         this.health = health;
+        icon = "./engimon";
     }
 
     // Constructor tanpa parameter health
@@ -306,5 +308,10 @@ public class Engimon {
 
     public int getHealth() {
         return health;
+    }
+
+    @Override
+    public String getIcon() {
+        return icon;
     }
 }

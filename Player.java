@@ -1,12 +1,13 @@
 import java.util.*;
 
-public class Player {
+public class Player implements Grafik{
 
     private Position playerPos = new Position();
     private Inventory<Engimon> inventoryE = new Inventory<Engimon>();
     private Inventory<SkillItem> inventoryS = new Inventory<SkillItem>();
     private int maxInv;
     private int idActiveEngimon;
+    private String icon;
 
 
     public Player(){
@@ -110,6 +111,12 @@ public class Player {
     public void changeEngimonName(int idx, String name){
         inventoryE.getElement(idx).setName(name);
     }
+
+    @Override
+    public String getIcon() {
+        return icon;
+    }
+
     public class EngimonSorter implements Comparator<Engimon>{
 
         @Override
