@@ -7,6 +7,7 @@ public class Firemon extends Engimon {
 
         SkillGacha sg = new SkillGacha();
         skill = sg.getSkillGen(Element.FIRE, Element.NONE);
+        this.icon = "res/f.png";
     }
 
     public Firemon(int x, int px, int py) {
@@ -14,6 +15,7 @@ public class Firemon extends Engimon {
 
         SkillGacha sg = new SkillGacha();
         skill = sg.getSkillGen(Element.FIRE, Element.NONE);
+        this.icon = "res/f.png";
     }
 
     public Firemon(String name, String p1name, String p2name, String p1spc, String p2spc, int exp, int px, int py, int health) {
@@ -21,6 +23,7 @@ public class Firemon extends Engimon {
 
         SkillGacha sg = new SkillGacha();
         skill = sg.getSkillGen(Element.FIRE, Element.NONE);
+        this.icon = "res/f.png";
     }
 
     public Firemon(int x, int px, int py, int health) {
@@ -28,11 +31,13 @@ public class Firemon extends Engimon {
 
         SkillGacha sg = new SkillGacha();
         skill = sg.getSkillGen(Element.FIRE, Element.NONE);
+        this.icon = "res/f.png";
     }
 
     //Constructor buat Load
     public Firemon(String name, String p1name, String p2name, String p1spc, String p2spc, int exp, int px, int py, int health, int cumExp, int maxExp, Vector<Skill> sk) {
         super(name, p1name, p2name, p1spc, p2spc,"Firemon", exp, Element.WATER, Element.GROUND, px, py, "ROARRR", health, cumExp, maxExp);
         skill = sk;
+        this.icon = "res/f.png";
     }
 }

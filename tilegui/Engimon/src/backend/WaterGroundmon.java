@@ -7,6 +7,7 @@ public class WaterGroundmon extends Engimon {
 
         SkillGacha sg = new SkillGacha();
         skill = sg.getSkillGen(Element.WATER, Element.GROUND);
+        this.icon = "res/w.png";
     }
 
     public WaterGroundmon(int x, int px, int py) {
@@ -14,6 +15,7 @@ public class WaterGroundmon extends Engimon {
 
         SkillGacha sg = new SkillGacha();
         skill = sg.getSkillGen(Element.WATER, Element.GROUND);
+        this.icon = "res/w.png";
     }
 
     public WaterGroundmon(String name, String p1name, String p2name, String p1spc, String p2spc, int exp, int px, int py, int health) {
@@ -21,6 +23,7 @@ public class WaterGroundmon extends Engimon {
 
         SkillGacha sg = new SkillGacha();
         skill = sg.getSkillGen(Element.WATER, Element.GROUND);
+        this.icon = "res/w.png";
     }
 
     public WaterGroundmon(int x, int px, int py, int health) {
@@ -28,11 +31,13 @@ public class WaterGroundmon extends Engimon {
 
         SkillGacha sg = new SkillGacha();
         skill = sg.getSkillGen(Element.WATER, Element.GROUND);
+        this.icon = "res/w.png";
     }
 
     //Constructor buat Load
     public WaterGroundmon(String name, String p1name, String p2name, String p1spc, String p2spc, int exp, int px, int py, int health, int cumExp, int maxExp, Vector<Skill> sk) {
         super(name, p1name, p2name, p1spc, p2spc,"WaterGroundmon", exp, Element.WATER, Element.GROUND, px, py, "BUMM BYURR", health, cumExp, maxExp);
         skill = sk;
+        this.icon = "res/w.png";
     }
 }
