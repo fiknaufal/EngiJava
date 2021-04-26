@@ -253,6 +253,31 @@ public class Map {
         System.out.println("command: ");
     }
 
+    //Getter buat SaveLoad
+    public ArrayList<String> getMapMatrix() {
+        return mapMatrix;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public ArrayList<Engimon> getWildEngi() {
+        return wildEngi;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public gameState getGameState() {
+        return state;
+    }
+
 }
 //
 //        void Map::gameFlow(){

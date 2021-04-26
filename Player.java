@@ -426,6 +426,23 @@ public class Player {
             inventoryE.getArray().get(idxB).setLevelAfterBreeding();
         }
     }
+
+    //Getter buat SaveLoad
+    public Inventory<Engimon> getInventoryE() {
+        return inventoryE;
+    }
+
+    public Inventory<SkillItem> getInventoryS() {
+        return inventoryS;
+    }
+
+    public int getMaxInv() {
+        return maxInv;
+    }
+
+    public int getIdActiveEngimon() {
+        return idActiveEngimon;
+    }
 //    // fungsi breeding
 //// Tinggal digabungin ke class player jg, nnt anaknya langsung dimasukin ke list aj, kgk usah jd output
 //    void Player::breedEngimon (int idxA, int idxB) {

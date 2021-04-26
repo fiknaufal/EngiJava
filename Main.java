@@ -1,9 +1,11 @@
 import java.util.Scanner;
+import java.io.*;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int jumlah, level;
+        char save;
         Map map;
         System.out.println("  _____ _            _____             _");
         System.out.println(" |_   _| |__   ___  | ____|_ __   __ _(_)_ __ ___   ___  _ __");
@@ -24,7 +26,25 @@ public class Main {
         System.out.println();
         System.out.println("Selamat bermain!\n");
         // jalan game
+
         map = new Map(level, "Map.txt", jumlah);
+
+        //TEST
+        // Uji coba save
+        System.out.printf("Apakah kamu ingin save state permainan[y/n]?: ");
+        save = sc.next().charAt(0);
+        if (save == 'y') {
+            String textFile;
+            System.out.println("Masukkan nama file untuk menyimpan state permainan:");
+            textFile = sc.next();
+            try {
+                SaveLoad.Save(map, textFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        //END OF TEST
+        
         map.gameFlow();
         System.out.println();
         System.out.println("  _____ _                 _           __");

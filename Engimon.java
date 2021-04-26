@@ -286,4 +286,25 @@ public class Engimon {
         health--;
         return health;
     }
+
+    //Getter buat SaveLoad
+    public String[] getParentNames() {
+        return parentNames;
+    }
+
+    public String[] getParentSpecies() {
+        return parentSpecies;
+    }
+
+    public int getMaxExp() {
+        return maxExp;
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public int getHealth() {
+        return health;
+    }
 }
