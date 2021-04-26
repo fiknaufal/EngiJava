@@ -140,7 +140,10 @@ public class Player implements Grafik {
     }
     
     public int getUniqueSkillItem() {
-    	return inventoryS.getSize();
+    	if(inventoryS.getSize() != 0) {
+    		return inventoryS.getSize();
+    	}
+    	return -1;
     }
     public boolean addEngimon(Engimon e){
         if(getInvCount() < maxInv){
