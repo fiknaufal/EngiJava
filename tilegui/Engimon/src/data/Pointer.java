@@ -7,6 +7,7 @@ public class Pointer {
 	private int maxidx;
 	private int pilihanMenu = 0;
 	private int penanda = 0;
+	private int penandaEnter = 0;
 	
 	public Pointer() {
 		this.idx = 0;
@@ -27,9 +28,11 @@ public class Pointer {
 	}
 	
 	public int enter() {
-		if (Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_RETURN) && penandaEnter == 0) {
+			penandaEnter = 1;
 			return idx;
 		}else {
+			penandaEnter = 0;
 			return -1;
 		}
 	}

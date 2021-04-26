@@ -128,7 +128,13 @@ public class Engimon implements Grafik {
 
     public void printSound(){
         //Kayanya kalau di GUI ini ntar perlu disesuaiin lagi?
-        System.out.printf("%s : $s\n",name,sound);
+    	TrueTypeFont font;
+    	Font awtFont = new Font("Times New Roman", Font.BOLD, 50); //name, style (PLAIN, BOLD, or ITALIC), size
+    	font = new TrueTypeFont(awtFont, false);
+    	
+    	
+    	font.drawString((float) 500, (float) 300, name + " : " + sound, Color.white);
+//        System.out.printf("%s : $s\n",name,sound);
     }
 
     public void setLevelAfterBreeding(){
