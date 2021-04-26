@@ -1,0 +1,91 @@
+package data;
+
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+import org.newdawn.slick.opengl.Texture;
+
+import static org.lwjgl.opengl.GL11.*;
+import static helpers.Artist.*;
+import backend.*;
+
+public class Boot {
+	private int gameState;
+	private Map map;
+	
+	public Boot() {
+		BeginSession();
+		map = new Map(0, "Map", 10);
+		gameState = 0;
+		
+		Texture t, tplayer, tmainmenu;
+		Pointer p = new Pointer();
+		while (!Display.isCloseRequested()) {
+			if (gameState == 0) {
+				p.update();
+				if (p.getIndex() == 0) {
+					tmainmenu = LoadTexture("res/mainpil1.png", "PNG");
+					DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				}else {
+					tmainmenu = LoadTexture("res/mainpil2.png", "PNG");
+					DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				}
+				int jawab = p.enter();
+				if (jawab == 0) {
+					gameState = 1;
+				}
+				if (jawab == 1) {
+					//load
+					gameState = 1;
+				}
+
+			}
+			
+			if (gameState == 1) {
+				map.getPlayer().Move();
+				char[][] mapPolos = map.getMap();
+				char[][] mapBerisi = map.getMapIsi();
+				
+				for (int i = 0; i < map.getMapMatrix().size(); i++) {
+					for (int j = 0; j < map.getMapMatrix().get(0).length(); j++) {
+						if (mapPolos[j][i] == '-') {
+							t = LoadTexture("res/grass2.png", "PNG");
+							DrawQuadTex(t, j*panjangTile(), i*panjangTile(), panjangTile(), panjangTile());
+						}else if(mapPolos[j][i] == '+'){
+							t = LoadTexture("res/sea2.png", "PNG");
+							DrawQuadTex(t, j*panjangTile(), i*panjangTile(), panjangTile(), panjangTile());
+						}
+					}
+				}
+				for (int i = 0; i < map.getMapMatrix().size(); i++) {
+					for (int j = 0; j < map.getMapMatrix().get(0).length(); j++) {
+						if (mapBerisi[j][i] == 'P') {
+							t = LoadTexture("res/player.png", "PNG");
+							DrawQuadTex(t, j*panjangTile(), i*panjangTile(), panjangTile(), panjangTile());
+						}else if(mapBerisi[j][i] == 'X'){
+							t = LoadTexture("res/eevee.png", "PNG");
+							DrawQuadTex(t, j*panjangTile(), i*panjangTile(), panjangTile(), panjangTile());
+						}
+					}
+				}
+			}
+
+			Display.update();
+			Display.sync(60);
+		}
+		Display.destroy();
+	}
+	
+	public float panjangTile() {
+		if ((map.getMapMatrix().size()/map.getMapMatrix().get(0).length()) > (960/1280)) {
+			return 960/map.getMapMatrix().size();
+		}
+		else {
+			return 1280/map.getMapMatrix().get(0).length();
+		}
+	}
+	
+	public static void main (String[] args) {
+		new Boot();
+	}
+}

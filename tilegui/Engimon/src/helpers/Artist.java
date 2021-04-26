@@ -13,7 +13,7 @@ import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class Artist {
-	public static final int WIDTH = 1280, HEIGHT = 960;
+	public static final int WIDTH = 1500, HEIGHT = 960;
 	
 	public static void BeginSession() {
 		Display.setTitle("Engimon Factory");
@@ -34,12 +34,14 @@ public class Artist {
 	}
 	
 	public static void DrawQuad(float x, float y,float width, float height) {
+		glColor3f(255, 255, 255);
 		glBegin(GL_QUADS);
 		glVertex2f(x, y);
 		glVertex2f(x+width, y);
 		glVertex2f(x+width, y+height);
 		glVertex2f(x, y+height);
 		glEnd();
+		glLoadIdentity();
 	}
 	
 	public static void DrawQuadTex(Texture tex, float x, float y,float width, float height) {

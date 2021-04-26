@@ -1,0 +1,70 @@
+package data;
+
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+import org.newdawn.slick.opengl.Texture;
+
+import static org.lwjgl.opengl.GL11.*;
+import static helpers.Artist.*;
+
+public class Boot {
+	
+	private Player player;
+	private int gameState;
+	
+	public Boot() {
+		BeginSession();
+		player = new Player(0, 0);
+		gameState = 0;
+		
+		Texture t, tplayer, tmainmenu, tcur;
+		Pointer p = new Pointer(gameState);
+		while (!Display.isCloseRequested()) {
+			if (gameState == 0) {
+				p.update();
+				if (p.getIndex() == 0) {
+					tmainmenu = LoadTexture("res/mainpil1.png", "PNG");
+					DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				}else {
+					tmainmenu = LoadTexture("res/mainpil2.png", "PNG");
+					DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				}
+
+			}
+			
+			if (gameState == 1) {
+				player.move();
+				for (int i = 0; i < 15; i++) {
+					for (int j = 0; j < 20; j++) {
+						if (i < 8 && j < 10) {
+							t = LoadTexture("res/grass2.png", "PNG");
+							DrawQuadTex(t, j*64+2, i*64+2, 60, 60);
+						} else if ((i < 8 && j >= 10)) {
+							t = LoadTexture("res/ice2.png", "PNG");
+							DrawQuadTex(t, j*64+2, i*64+2, 60, 60);
+						} else if ((i >= 8 && j >= 10)) {
+							t = LoadTexture("res/sea2.png", "PNG");
+							DrawQuadTex(t, j*64+2, i*64+2, 60, 60);
+						} else {
+							t = LoadTexture("res/lava2.png", "PNG");
+							DrawQuadTex(t, j*64+2, i*64+2, 60, 60);
+						}
+						if (j == player.getX() && i == player.getY()) {
+							tplayer = LoadTexture("res/player.png", "PNG");
+							DrawQuadTex(tplayer, j*64+3, i*64+1, 64, 64);
+						}
+					}
+				}
+			}
+
+			Display.update();
+			Display.sync(60);
+		}
+		Display.destroy();
+	}
+	
+	public static void main (String[] args) {
+		new Boot();
+	}
+}

@@ -1,0 +1,16 @@
+package data;
+import java.util.Vector;
+
+public class Pointer {
+	private Vector<Integer> vx;
+	private Vector<Integer> vy;
+	
+	private int x;
+	private int y;
+	
+	public Pointer(int gameState) {
+		if (gameState == 0) {
+			
+		}
+	}
+}

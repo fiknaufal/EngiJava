@@ -1,0 +1,36 @@
+package data;
+import java.util.Vector;
+
+import org.lwjgl.input.Keyboard;
+
+public class Pointer {
+	private Vector<Float> vx = new Vector<>();
+	private Vector<Float> vy = new Vector<>();;
+	
+	private int idx;
+	
+	public Pointer(int gameState) {
+		if (gameState == 0) {
+			vx.add((float)400); vy.add((float)580.0);
+			vx.add((float)380.0); vy.add((float)680.0);
+			this.idx = 0;
+		}
+	}
+	
+	public void update() {
+		if (Keyboard.isKeyDown(Keyboard.KEY_W)) {
+			this.idx = (this.idx-1)%2;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
+			this.idx = (this.idx+1)%2;
+		}
+	}
+	
+	public float getX() {
+		return this.vx.get(this.idx);
+	}
+	
+	public float getY() {
+		return this.vy.get(this.idx);
+	}
+}
