@@ -57,11 +57,11 @@ public class Map {
             addEngi();
         }
 
-        Firemon f = new Firemon(3900, 0, 0);
-        Firemon f1 = new Firemon(3200, 0, 0);
-        Electricmon e = new Electricmon(3200, 0, 0);
-        Electricmon e1 = new Electricmon(3200, 0, 0);
-        WaterGroundmon w = new WaterGroundmon(3200, 0, 0);
+        Firemon f = new Firemon(3900, 0, 0, 3);
+        Firemon f1 = new Firemon(3200, 0, 0, 3);
+        Electricmon e = new Electricmon(3200, 0, 0, 3);
+        Electricmon e1 = new Electricmon(3200, 0, 0, 3);
+        WaterGroundmon w = new WaterGroundmon(3200, 0, 0, 3);
         player.addEngimon(f);
         player.addEngimon(e);
         player.addEngimon(f1);

@@ -10,7 +10,7 @@ public enum Element {
     ICE(5);
 
     private int value;
-    private static Map map = new HashMap<>();
+    private static Map<Integer, Element> map = new HashMap<Integer, Element>();
 
     private Element(int value) {
         this.value = value;

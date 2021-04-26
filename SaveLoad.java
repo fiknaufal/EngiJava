@@ -16,10 +16,10 @@ public class SaveLoad {
         }
 
         //Save current player
-        pw.write(currentState.getPlayer().getPlayerPos().getX())
-        pw.write(currentState.getPlayer().getPlayerPos().getY())
+        pw.write(currentState.getPlayer().getPlayerPos().getX());
+        pw.write(currentState.getPlayer().getPlayerPos().getY());
 
-        int nitems = currentState.getPlayer().getInvCount()
+        int nitems = currentState.getPlayer().getInvCount();
 
         while(true) {
 
