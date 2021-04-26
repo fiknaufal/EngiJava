@@ -16,7 +16,7 @@ public class Engimon implements Grafik {
     protected String species;
     protected Element[] elements;
     protected String sound;
-    protected static int maxExp = 3500;
+    protected static int maxExp = 4099;
     protected int exp;
     protected int cumulativeExp;
     protected Position engimonPos = new Position(); //Class Positionnya belum?
@@ -36,6 +36,7 @@ public class Engimon implements Grafik {
         parentSpecies[0] = p1spc;
         parentSpecies[1] = p2spc;
         exp = expr;
+        cumulativeExp = expr;
         elements = new Element[2];
         elements[0] = e1;
         elements[1] = e2;
@@ -62,6 +63,7 @@ public class Engimon implements Grafik {
         parentSpecies[0] = p1spc;
         parentSpecies[1] = p2spc;
         exp = expr;
+        cumulativeExp = expr;
         elements = new Element[2];
         elements[0] = e1;
         elements[1] = e2;

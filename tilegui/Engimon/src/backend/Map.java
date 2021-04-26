@@ -60,9 +60,6 @@ public class Map {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-        while (wildEngi.size() < maxengi){
-            addEngi();
-        }
 
         Firemon f = new Firemon(3900, 0, 0, 3);
         Firemon f1 = new Firemon(3200, 0, 0, 3);
@@ -75,15 +72,20 @@ public class Map {
         player.addEngimon(e1);
         player.addEngimon(w);
         level = n;
+        
+        while (wildEngi.size() < maxengi){
+            addEngi();
+        }
         state = gameState.Jalan;
     }
 
     public void addEngi(){
-        int r = ThreadLocalRandom.current().nextInt(1, 31)*100;
+        int r = ThreadLocalRandom.current().nextInt(player.maxLevelEngi(), 41)*100;
         int x = ThreadLocalRandom.current().nextInt(0, mapMatrix.get(0).length()), y = ThreadLocalRandom.current().nextInt(0, mapMatrix.size());
         Engimon w;
         Position p = new Position(x, y);
-
+        System.out.println(player.maxLevelEngi());
+        System.out.println(r);
         while(!nobodyThere(p)){
             x =ThreadLocalRandom.current().nextInt(0, mapMatrix.get(0).length());
             y = ThreadLocalRandom.current().nextInt(0, mapMatrix.size());
@@ -210,15 +212,8 @@ public class Map {
 
         i=0;
         while(i < wildEngi.size()){
-//        	Random rand = new Random();
             r = ThreadLocalRandom.current().nextInt(1, 5);
             m = ThreadLocalRandom.current().nextInt(0, 12);
-        	counting++;
-//        	r = 1;
-//        	m = 0;
-//        	r = rand.nextInt(4)+1;
-//        	m = rand.nextInt(10)+1;
-            System.out.printf("count ke-%d: %d\n", counting, m);
             p = wildEngi.get(i).randomMove(r);
             if(m==0 && isInMap(p) && canEngimonWalk(wildEngi.get(i), p) && nobodyThere(p)){
                 wildEngi.get(i).setEngimonPos(p.getX(), p.getY());

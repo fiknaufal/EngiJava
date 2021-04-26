@@ -16,6 +16,7 @@ public class Player implements Grafik {
     private int maxInv;
     private int idActiveEngimon;
     private String icon;
+    int udahDipencet = 0;
 
     public int firstBreedEngi = -1;
     public int secondBreedEngi = -1;
@@ -38,7 +39,19 @@ public class Player implements Grafik {
     public void showEngimon(int idx){
         inventoryE.getElement(idx).printData();
     }
-    int udahDipencet = 0;
+    
+    public int maxLevelEngi() {
+    	int n = 0;
+    	System.out.println(inventoryE.getSize());
+    	for(int i = 0; i < inventoryE.getSize(); i++) {
+    		if(n < inventoryE.getElement(i).getLevel()) {
+    			System.out.println(inventoryE.getElement(i).getLevel());
+    			n = inventoryE.getElement(i).getLevel();
+    		}
+    	}
+    	return n;
+    }
+    
     public boolean Move(int bawah, int kanan){
         if (Keyboard.isKeyDown(Keyboard.KEY_W) && playerPos.getY() != 0 && udahDipencet == 0) {
         	inventoryE.getElement(idActiveEngimon).setEngimonPos(playerPos.getX(), playerPos.getY());
@@ -262,9 +275,10 @@ public class Player implements Grafik {
         }
     }
 
-    public void useSkillItem(int idxsi, int idxengi){
-        inventoryS.getElement(idxsi).learnSkill(inventoryE.getElement(idxengi));
+    public boolean useSkillItem(int idxsi, int idxengi){
+        boolean hasil = inventoryS.getElement(idxsi).learnSkill(inventoryE.getElement(idxengi));
         updateSkillItem();
+        return hasil;
     }
 
     public void setActiveEngi(int i){

@@ -21,6 +21,7 @@ public class Boot {
 	private Map map;
 	private SaveLoad save =  new SaveLoad();
 	private boolean lose;
+	private int skillIndex = 0; //buat passing skill mana yang mau di learn
 	
 	public Boot() {
 		BeginSession();
@@ -317,7 +318,7 @@ public class Boot {
 				p.menuUpdate();
 				int pilihan = p.enter();
 				int back = p.esc();
-				int state = p.getMenu() % map.getPlayer().getEngimonCount();
+				int state = p.getMenu() % map.getPlayer().getUniqueSkillItem();
 				tmainmenu = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
 				if(pilihan == -1) {
@@ -328,6 +329,7 @@ public class Boot {
 				}
 				else {
 					// show skill data
+					skillIndex = state;
 					gameState = 13;
 				}
 				
@@ -397,10 +399,42 @@ public class Boot {
 				}
 				
 			}
-			if(gameState == 13) {//breed
+			if(gameState == 13) {//learn skill
+				p.menuUpdate();
+				int pilihan = p.enter();
+				int back = p.esc();
+				int state = p.getMenu() % map.getPlayer().getEngimonCount();
 				tmainmenu = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
-				
+				if(pilihan == -1) {
+					map.getPlayer().showEngimonList(state);
+					if(back != -1) {
+						gameState = 9;
+					}
+				}
+				else {
+					// skill di learn sama engimonnya
+					if(map.getPlayer().useSkillItem(skillIndex, state)) {
+						gameState = 14;
+					}
+					else {
+						gameState = 4;
+					}
+				}
+			}
+			if(gameState == 14) {
+				tmainmenu = LoadTexture("res/blacks.png", "PNG");
+				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				TrueTypeFont font;
+		    	Font awtFont = new Font("Times New Roman", Font.BOLD, 50); //name, style (PLAIN, BOLD, or ITALIC), size
+		    	font = new TrueTypeFont(awtFont, false);
+		    	
+		    	
+		    	font.drawString((float) 400, (float) 400, "Gagal mempelajari skill.", Color.white);
+		    	font.drawString((float) 400, (float) 455, "Engimon memiliki elemen berbeda!", Color.white);
+		    	if(p.esc() != -1) {
+					gameState = 4;
+				}
 			}
 			Display.update();
 			Display.sync(10);

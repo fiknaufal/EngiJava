@@ -26,7 +26,7 @@ public class SkillItem {
         jumlah += n;
     }
 
-    public void learnSkill(Engimon e) {
+    public boolean learnSkill(Engimon e) {
         boolean can = false;
         for(int i = 0; i < skill.getElement().size(); i++){
             if (skill.getElement().get(i) == e.getElement1() || skill.getElement().get(i) == e.getElement2()) {
@@ -38,9 +38,11 @@ public class SkillItem {
             if (e.addSkill(skill)) {
                 jumlah -= 1;
             }
+            return can;
         }
         else {
-            System.out.println("Gagal mempelajari skill.\nEngimon memiliki elemen berbeda!");
+//            System.out.println("Gagal mempelajari skill.\nEngimon memiliki elemen berbeda!");
+        	return can;
         }
     }
 }
