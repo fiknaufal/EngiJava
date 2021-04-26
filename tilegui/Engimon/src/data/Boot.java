@@ -11,6 +11,7 @@ import static org.lwjgl.opengl.GL11.*;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 import java.awt.Font;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import static helpers.Artist.*;
@@ -412,7 +413,7 @@ public class Boot {
 				tmainmenu = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
 				if(pilihan == -1) {
-					map.getPlayer().showEngimonList(state);
+					map.getPlayer().showEngimonList(500, state);
 					if(back != -1) {
 						gameState = 9;
 					}
