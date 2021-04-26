@@ -276,6 +276,9 @@ public class Boot {
 				tmainmenu = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
 				map.getPlayer().petEngi();
+				if(p.esc() != -1) {
+					gameState = 3;
+				}
 				
 			}
 			if(gameState == 7) {//save error
@@ -287,7 +290,7 @@ public class Boot {
 		    	
 		    	
 		    	font.drawString((float) 600, (float) 400, "Save Error", Color.white);
-		    	if(p.anyKeyDown()) {
+		    	if(p.esc() != -1) {
 		    		gameState = 1;
 		    	}
 				
@@ -295,11 +298,15 @@ public class Boot {
 			if(gameState == 8) {//show engimon
 				p.menuUpdate();
 				int pilihan = p.enter();
+				int back = p.esc();
 				int state = p.getMenu() % map.getPlayer().getEngimonCount();
 				tmainmenu = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
 				if(pilihan == -1) {
 					map.getPlayer().showEngimonList(state);
+					if(back != -1) {
+						gameState = 4;
+					}
 				}
 				else {
 					// show engimon data
@@ -307,16 +314,62 @@ public class Boot {
 				}
 			}
 			if(gameState == 9) {//show skill items
+				p.menuUpdate();
+				int pilihan = p.enter();
+				int back = p.esc();
+				int state = p.getMenu() % map.getPlayer().getEngimonCount();
 				tmainmenu = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				if(pilihan == -1) {
+					map.getPlayer().showSkillItemList(state);
+					if(back != -1) {
+						gameState = 4;
+					}
+				}
+				else {
+					// show skill data
+					gameState = 13;
+				}
 				
 			}
 			if(gameState == 10) {//choose active
+				TrueTypeFont font;
+		    	Font awtFont = new Font("Times New Roman", Font.BOLD, 50); //name, style (PLAIN, BOLD, or ITALIC), size
+		    	font = new TrueTypeFont(awtFont, false);
+		    	
+				p.menuUpdate();
+				int pilihan = p.enter();
+				int state = p.getMenu() % map.getPlayer().getEngimonCount();
+				tmainmenu = LoadTexture("res/blacks.png", "PNG");
+				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				font.drawString((float) 500, (float) 250, "Choose Active", Color.white);
+				if(p.esc() != -1) {
+		    		gameState = 4;
+		    	}
+				if(pilihan == -1) {
+					map.getPlayer().showEngimonList(state);
+				}
+				else {
+					map.getPlayer().setActiveEngi(state);
+					gameState = 4;
+				}
+				
+			}
+			if(gameState == 11) {//breed
 				tmainmenu = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
 				
 			}
-			if(gameState == 11) {//breed
+			if(gameState == 12) {//show engimon status
+				tmainmenu = LoadTexture("res/blacks.png", "PNG");
+				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				map.getPlayer().getInventoryE().getElement(p.getMenu() % map.getPlayer().getEngimonCount()).printData();
+				if(p.esc() != -1) {
+					gameState = 4;
+				}
+				
+			}
+			if(gameState == 13) {//breed
 				tmainmenu = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
 				

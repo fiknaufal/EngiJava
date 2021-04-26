@@ -240,12 +240,22 @@ public class Player implements Grafik {
         }
     }
 
-    public void showSkillItemList(){
+    public void showSkillItemList(int idx){
+    	TrueTypeFont font;
+    	Font awtFont = new Font("Times New Roman", Font.BOLD, 24); //name, style (PLAIN, BOLD, or ITALIC), size
+    	font = new TrueTypeFont(awtFont, false);
+    	
         int j = 1;
-        System.out.println("List of Skill Item");
+        String s = "(learn)";
+        font.drawString((float) 500, (float) 250, "List of Skill Item", Color.white);
         ArrayList<SkillItem> e = inventoryS.getArray();
         for(int i = 0; i < e.size(); i++){
-            System.out.printf("%d. %s lv. %d\n", j, e.get(i).getSkill().getSkillName(), e.get(i).getJumlah());
+        	if(i == idx) {
+            	font.drawString((float) 500, (float) 300 + i*25, String.format("%d. %s lv. %d %s\n", j, e.get(i).getSkill().getSkillName(), e.get(i).getJumlah(), s), Color.white);
+            }
+            else {
+            	font.drawString((float) 500, (float) 300 + i*25, String.format("%d. %s lv. %d\n", j, e.get(i).getSkill().getSkillName(), e.get(i).getJumlah()), Color.white);
+            }
             j++;
         }
     }
