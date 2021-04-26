@@ -45,10 +45,8 @@ public class Player implements Grafik {
     
     public int maxLevelEngi() {
     	int n = 0;
-    	System.out.println(inventoryE.getSize());
     	for(int i = 0; i < inventoryE.getSize(); i++) {
     		if(n < inventoryE.getElement(i).getLevel()) {
-    			System.out.println(inventoryE.getElement(i).getLevel());
     			n = inventoryE.getElement(i).getLevel();
     		}
     	}
@@ -329,8 +327,8 @@ public class Player implements Grafik {
             if (pEngi.decreaseHealth() == 0) {
             	inventoryE.removeAtIdx(idActiveEngimon);
 	            setActiveEngi(0);
+	            MoveActiveEngi();
             }
-
             return false;
         }
 
@@ -339,6 +337,7 @@ public class Player implements Grafik {
             if (pEngi.getCml() >= 4000) {
                 inventoryE.removeAtIdx(idActiveEngimon);
                 setActiveEngi(0);
+                MoveActiveEngi();
                 System.out.println("Active Engimon mati karena melampaui batas level maksimal!\nActive Engimon sekarang adalah Engimon teratas di list.");
             }
             return true;

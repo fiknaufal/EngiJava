@@ -84,8 +84,6 @@ public class Map {
         int x = ThreadLocalRandom.current().nextInt(0, mapMatrix.get(0).length()), y = ThreadLocalRandom.current().nextInt(0, mapMatrix.size());
         Engimon w;
         Position p = new Position(x, y);
-        System.out.println(player.maxLevelEngi());
-        System.out.println(r);
         while(!nobodyThere(p)){
             x =ThreadLocalRandom.current().nextInt(0, mapMatrix.get(0).length());
             y = ThreadLocalRandom.current().nextInt(0, mapMatrix.size());
