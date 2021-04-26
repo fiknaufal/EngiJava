@@ -45,6 +45,8 @@ public class Engimon implements Grafik {
         engimonPos.setY(py);
         icon = "res/eevee.png";
         this.health = health;
+        
+        skill = new Vector<Skill>();
     }
 
     // Constructor tanpa parameter health
@@ -68,24 +70,31 @@ public class Engimon implements Grafik {
         engimonPos.setX(px);
         engimonPos.setY(py);
         this.health = 1;
+        
+        skill = new Vector<Skill>();
     }
 
-    public Engimon(final Engimon other){
+    public Engimon(Engimon other){
         //Versi C++: Engimon(const Engimon& other)
         //Di java ga ada const, adanya final. Tapi masih aga beda juga sih. Cm sementara aku ake final yak
         name = other.name;
+        parentNames = new String[2];
         parentNames[0] = other.parentNames[0];
         parentNames[1] = other.parentNames[1];
+        parentSpecies = new String[2];
         parentSpecies[0] = other.parentSpecies[0];
         parentSpecies[1] = other.parentSpecies[1];
         exp = other.exp;
         cumulativeExp = other.cumulativeExp;
+        elements = new Element[2];
         elements[0] = other.elements[0];
         elements[1] = other.elements[1];
         sound = other.sound;
         species = other.species;
         engimonPos = other.engimonPos;
         this.skill = other.skill;
+        
+        skill = new Vector<Skill>(other.skill);
     }
 
     public int getLevel(){

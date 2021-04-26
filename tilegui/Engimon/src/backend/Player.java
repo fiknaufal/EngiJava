@@ -17,6 +17,8 @@ public class Player implements Grafik {
     private int idActiveEngimon;
     private String icon;
 
+    public int firstBreedEngi = -1;
+    public int secondBreedEngi = -1;
 
     public Player(){
         playerPos.setX(1);
@@ -218,7 +220,7 @@ public class Player implements Grafik {
 //        }
 //    }
     
-    public void showEngimonList(int idx){
+    public void showEngimonList(float hOffset, int idx){
     	TrueTypeFont font;
     	Font awtFont = new Font("Times New Roman", Font.BOLD, 24); //name, style (PLAIN, BOLD, or ITALIC), size
     	font = new TrueTypeFont(awtFont, false);
@@ -231,10 +233,10 @@ public class Player implements Grafik {
         for(int i = 0; i < inventoryE.getSize(); i++){
             engi = inventoryE.getElement(i);
             if(i == idx) {
-            	font.drawString((float) 500, (float) 300 + i*25, String.format("%d. %s %s lv. %d %s\n", j, engi.getName(), engi.getSpecies(), engi.getLevel(), s), Color.white);
+            	font.drawString(hOffset, (float) 300 + i*25, String.format("%d. %s %s lv. %d %s\n", j, engi.getName(), engi.getSpecies(), engi.getLevel(), s), Color.white);
             }
             else {
-            	font.drawString((float) 500, (float) 300 + i*25, String.format("%d. %s %s lv. %d\n", j, engi.getName(), engi.getSpecies(), engi.getLevel()), Color.white);
+            	font.drawString(hOffset, (float) 300 + i*25, String.format("%d. %s %s lv. %d\n", j, engi.getName(), engi.getSpecies(), engi.getLevel()), Color.white);
             }
             j++;
         }
@@ -403,15 +405,13 @@ public class Player implements Grafik {
         }
 
         // Masukin nama
-        String childName;
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Your new engimon name: ");
-        childName = sc.nextLine();
-        sc.close();
+        String childName = "Ayam";
 
         // Buat objek Engimon baru dgn element dan nama di atas
         Engimon anak = new Engimon(childName, engiA.getName(), engiB.getName(), engiA.getSpecies(), engiB.getSpecies(), spc, 100, childElmt[0], childElmt[1], -1, -1, sound, 3);
 
+        System.out.println("Udah construct anak");
+        
         // Masukin skill-skill nya
         Vector<Skill> skillsA = new Vector<Skill>(engiA.getSkill());
         Vector<Skill> skillsB = new Vector<Skill>(engiB.getSkill());
@@ -423,18 +423,23 @@ public class Player implements Grafik {
         Skill signatureSkill = sg.getRandomSkill(childElmt[0], childElmt[1]);
         boolean foundSignSkill = false;
         int i=0;
-
+        
+        int engiASkillCount = skillsA.size();
+        int engiBSkillCount = skillsB.size();
         while ((i<4) && !foundSignSkill) {
-            if (signatureSkill.isEqual(skillsA.get(i)) || signatureSkill.isEqual(skillsB.get(i)))
+            if (signatureSkill.isEqual(skillsA.get(i%engiASkillCount)) || signatureSkill.isEqual(skillsB.get(i%engiBSkillCount)))
                 foundSignSkill = true;
+            i++;
         }
         
         if (!foundSignSkill)
             anak.addSkill(signatureSkill);
 
+        System.out.println("Udah skill bagian 1");
+        
         // Masukin ke engimon anak
         i=0;
-        while ((anak.getSkill().size() <= 4) && (!skillsA.isEmpty() || !skillsB.isEmpty())) {
+        while ((anak.getSkill().size() < 4) && (!skillsA.isEmpty() || !skillsB.isEmpty())) {
             int skillAIdx = -1;
             if (!skillsA.isEmpty()) {
                 for(i=0; i<skillsA.size(); i++) {
@@ -495,11 +500,11 @@ public class Player implements Grafik {
                     skillsB.remove(skillBIdx); // erase(skillsB.begin() + skillBIdx);
                 }
             }
-            // Tambahin anak ke list
-            addEngimon(anak);
-            inventoryE.getArray().get(idxA).setLevelAfterBreeding();
-            inventoryE.getArray().get(idxB).setLevelAfterBreeding();
         }
+        // Tambahin anak ke list
+        inventoryE.getArray().get(idxA).setLevelAfterBreeding();
+        inventoryE.getArray().get(idxB).setLevelAfterBreeding();
+        addEngimon(anak);
     }
     
 

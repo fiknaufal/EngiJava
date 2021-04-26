@@ -303,7 +303,7 @@ public class Boot {
 				tmainmenu = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
 				if(pilihan == -1) {
-					map.getPlayer().showEngimonList(state);
+					map.getPlayer().showEngimonList(500, state);
 					if(back != -1) {
 						gameState = 4;
 					}
@@ -347,7 +347,7 @@ public class Boot {
 		    		gameState = 4;
 		    	}
 				if(pilihan == -1) {
-					map.getPlayer().showEngimonList(state);
+					map.getPlayer().showEngimonList(500, state);
 				}
 				else {
 					map.getPlayer().setActiveEngi(state);
@@ -356,9 +356,37 @@ public class Boot {
 				
 			}
 			if(gameState == 11) {//breed
+				p.menuUpdate();
+				int pilihan = p.enter();
+				int state = p.getMenu() % map.getPlayer().getEngimonCount();
 				tmainmenu = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
 				
+				if (p.esc() != -1) {
+					map.getPlayer().firstBreedEngi = -1;
+					map.getPlayer().secondBreedEngi = -1;
+					gameState = 4;
+				}
+				else if(map.getPlayer().firstBreedEngi == -1) {
+					map.getPlayer().showEngimonList(50, state);
+					map.getPlayer().showEngimonList(600, 0);
+					if (pilihan != -1) {
+						map.getPlayer().firstBreedEngi = state;
+					}
+				}
+				else if(map.getPlayer().secondBreedEngi == -1) {
+					map.getPlayer().showEngimonList(50, map.getPlayer().firstBreedEngi);
+					map.getPlayer().showEngimonList(600, state);
+					if ((pilihan != -1) && (state != map.getPlayer().firstBreedEngi)) {
+						map.getPlayer().secondBreedEngi = state;
+					}
+				}
+				else {
+					map.getPlayer().breedEngimon(map.getPlayer().firstBreedEngi, map.getPlayer().secondBreedEngi);
+					map.getPlayer().firstBreedEngi = -1;
+					map.getPlayer().secondBreedEngi = -1;
+					gameState = 3;
+				}
 			}
 			if(gameState == 12) {//show engimon status
 				tmainmenu = LoadTexture("res/blacks.png", "PNG");
