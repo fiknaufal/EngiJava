@@ -63,4 +63,5 @@ public class Pointer {
 	public void resetMenu() {
 		pilihanMenu = 0;
 	}
+	
 }
