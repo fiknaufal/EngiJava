@@ -126,6 +126,7 @@ public class Boot {
 					gameState = 1;
 					if(state == 0) {
 						// open bag
+						p.resetMenu();
 						gameState = 4;
 					}
 					else if(state == 1) {
@@ -184,27 +185,121 @@ public class Boot {
 				}
 			}
 			if(gameState == 4) {//bag
-				tmainmenu = LoadTexture("res/black.png", "PNG");
-				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				p.menuUpdate();
+				int pilihan = p.enter();
+				int state = p.getMenu() % 5;
+				if(pilihan != -1) {
+					switch(state) {
+					case 0:
+						// show engimon
+						gameState = 8;
+						break;
+					case 1:
+						// show skill items
+						gameState = 9;
+						break;
+					case 2:
+						// choose active
+						gameState = 10;
+						break;
+					case 3:
+						// breed
+						gameState = 11;
+						break;
+					case 4:
+						// close
+						p.resetMenu();
+						gameState = 3;
+						break;
+					}
+				}
+				else {
+					switch(state) {
+					case 0:
+						tmainmenu = LoadTexture("res/bse.png", "PNG");
+						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+						break;
+					case 1:
+						tmainmenu = LoadTexture("res/bss.png", "PNG");
+						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+						break;
+					case 2:
+						tmainmenu = LoadTexture("res/bca.png", "PNG");
+						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+						break;
+					case 3:
+						tmainmenu = LoadTexture("res/bb.png", "PNG");
+						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+						break;
+					case 4:
+						tmainmenu = LoadTexture("res/bc.png", "PNG");
+						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+						break;
+					}
+//					if(state == 0) {
+//						tmainmenu = LoadTexture("res/bse.png", "PNG");
+//						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+//					}
+//					else if(state == 1) {
+//						tmainmenu = LoadTexture("res/bss.png", "PNG");
+//						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+//					}
+//					else if(state == 2) {
+//						tmainmenu = LoadTexture("res/bca.png", "PNG");
+//						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+//					}
+//					else if(state == 3) {
+//						tmainmenu = LoadTexture("res/bb.png", "PNG");
+//						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+//					}
+//					else if(state == 4) {
+//						tmainmenu = LoadTexture("res/bc.png", "PNG");
+//						DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+//					}
+				}
 				
 			}
 			if(gameState == 5) {//active Engimon
-				tmainmenu = LoadTexture("res/black.png", "PNG");
+				tmainmenu = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
 				
 			}
 			if(gameState == 6) {// pet sound
-				tmainmenu = LoadTexture("res/black.png", "PNG");
+				tmainmenu = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
 				
 			}
 			if(gameState == 7) {//save error
-				tmainmenu = LoadTexture("res/black.png", "PNG");
+				tmainmenu = LoadTexture("res/blacks.png", "PNG");
 				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
 				
 			}
+			if(gameState == 8) {//save error
+				tmainmenu = LoadTexture("res/blacks.png", "PNG");
+				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				
+			}
+			if(gameState == 9) {//save error
+				tmainmenu = LoadTexture("res/blacks.png", "PNG");
+				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				
+			}
+			if(gameState == 10) {//save error
+				tmainmenu = LoadTexture("res/blacks.png", "PNG");
+				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				
+			}
+			if(gameState == 11) {//save error
+				tmainmenu = LoadTexture("res/blacks.png", "PNG");
+				DrawQuadTex(tmainmenu, 0, 0, 2000, 960);
+				
+			}
+//			if(p.anyKeyDown()) {
+//				Display.update();
+//				Display.sync(500);
+//			}
 			Display.update();
-			Display.sync(500);
+			Display.sync(10);
 		}
 		Display.destroy();
 	}

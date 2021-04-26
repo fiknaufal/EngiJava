@@ -64,4 +64,7 @@ public class Pointer {
 		pilihanMenu = 0;
 	}
 	
+	public boolean anyKeyDown() {
+		return Keyboard.getEventKeyState();
+	}
 }

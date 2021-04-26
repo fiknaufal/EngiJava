@@ -4,6 +4,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -202,14 +203,22 @@ public class Map {
         return maps;
     }
 
+    int counting = 0;
     public void randomiseEnemyMovement(){
         int i, r, m;
         Position p;
 
         i=0;
         while(i < wildEngi.size()){
+//        	Random rand = new Random();
             r = ThreadLocalRandom.current().nextInt(1, 5);
-            m = ThreadLocalRandom.current().nextInt(0, 3);
+            m = ThreadLocalRandom.current().nextInt(0, 12);
+        	counting++;
+//        	r = 1;
+//        	m = 0;
+//        	r = rand.nextInt(4)+1;
+//        	m = rand.nextInt(10)+1;
+            System.out.printf("count ke-%d: %d\n", counting, m);
             p = wildEngi.get(i).randomMove(r);
             if(m==0 && isInMap(p) && canEngimonWalk(wildEngi.get(i), p) && nobodyThere(p)){
                 wildEngi.get(i).setEngimonPos(p.getX(), p.getY());
@@ -227,6 +236,7 @@ public class Map {
                     i++;
                 }
             }
+            i++;
         }
     }
 
@@ -293,11 +303,11 @@ public class Map {
     }
 
     public boolean nobodyThere(Position p){
-        if(p == player.getPlayerPos()){
+        if(p.isEqual(player.getPlayerPos())){
             return false;
         }
         for(int i = 0; i < wildEngi.size(); i++){
-            if(p == wildEngi.get(i).getEngimonPos()){
+            if(p.isEqual(wildEngi.get(i).getEngimonPos())){
                 return false;
             }
         }

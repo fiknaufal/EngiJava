@@ -32,31 +32,38 @@ public class Player implements Grafik {
     public void showEngimon(int idx){
         inventoryE.getElement(idx).printData();
     }
-
+    int udahDipencet = 0;
     public boolean Move(int bawah, int kanan){
-        if (Keyboard.isKeyDown(Keyboard.KEY_W) && playerPos.getY() != 0) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_W) && playerPos.getY() != 0 && udahDipencet == 0) {
         	inventoryE.getElement(idActiveEngimon).setEngimonPos(playerPos.getX(), playerPos.getY());
             int curY = playerPos.getY();
             playerPos.setY(curY-1);
+            udahDipencet = 1;
             return true;
         }
-        if (Keyboard.isKeyDown(Keyboard.KEY_A) && playerPos.getX() != 0){
+        if (Keyboard.isKeyDown(Keyboard.KEY_A) && playerPos.getX() != 0&& udahDipencet == 0){
         	inventoryE.getElement(idActiveEngimon).setEngimonPos(playerPos.getX(), playerPos.getY());
             int curX = playerPos.getX();
             playerPos.setX(curX-1);
+            udahDipencet = 1;
             return true;
         }
-        if (Keyboard.isKeyDown(Keyboard.KEY_S) && playerPos.getY() != bawah){
+        if (Keyboard.isKeyDown(Keyboard.KEY_S) && playerPos.getY() != bawah&& udahDipencet == 0){
         	inventoryE.getElement(idActiveEngimon).setEngimonPos(playerPos.getX(), playerPos.getY());
             int curY = playerPos.getY();
             playerPos.setY(curY+1);
+            udahDipencet = 1;
             return true;
         }
-        if (Keyboard.isKeyDown(Keyboard.KEY_D) && playerPos.getX() != kanan){
+        if (Keyboard.isKeyDown(Keyboard.KEY_D) && playerPos.getX() != kanan&& udahDipencet == 0){
         	inventoryE.getElement(idActiveEngimon).setEngimonPos(playerPos.getX(), playerPos.getY());
             int curX = playerPos.getX();
             playerPos.setX(curX+1);
+            udahDipencet = 1;
             return true;
+        }
+        if(!(Keyboard.isKeyDown(Keyboard.KEY_W) | Keyboard.isKeyDown(Keyboard.KEY_A) | Keyboard.isKeyDown(Keyboard.KEY_S) | Keyboard.isKeyDown(Keyboard.KEY_D))) {
+        	udahDipencet = 0;
         }
         return false;
     }
