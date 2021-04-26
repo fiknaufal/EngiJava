@@ -70,4 +70,8 @@ public class Pointer {
 	public boolean anyKeyDown() {
 		return Keyboard.getEventKeyState();
 	}
+	
+	public char keyChar() {
+		return Keyboard.getEventCharacter();
+	}
 }

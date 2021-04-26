@@ -174,6 +174,7 @@ public class Engimon implements Grafik {
     	font.drawString((float) 500, (float) 400, "Level: "+getLevel(), Color.white);
     	font.drawString((float) 500, (float) 425, "Experience: "+exp%100, Color.white);
     	font.drawString((float) 500, (float) 450, "Cumulative Experience: "+cumulativeExp, Color.white);
+    	font.drawString((float) 500, (float) 475, "Health: "+health, Color.white);
        
     }
 //    public void printData(){

@@ -7,6 +7,8 @@ import org.lwjgl.input.Keyboard;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 
+import data.Pointer;
+
 
 public class Player implements Grafik {
 
@@ -20,6 +22,7 @@ public class Player implements Grafik {
 
     public int firstBreedEngi = -1;
     public int secondBreedEngi = -1;
+    public String childName = new String();
 
     public Player(){
         playerPos.setX(1);
@@ -254,6 +257,17 @@ public class Player implements Grafik {
             j++;
         }
     }
+    
+    public void showAnakName(Character c) {
+    	TrueTypeFont font;
+    	Font awtFont = new Font("Times New Roman", Font.BOLD, 24); //name, style (PLAIN, BOLD, or ITALIC), size
+    	font = new TrueTypeFont(awtFont, false);
+    	
+    	if (c != null)
+    		childName = childName + c;
+    	
+		font.drawString((float) 300, (float) 300, String.format("Nama: %s", childName));
+    }
 
     public void showSkillItemList(int idx){
     	TrueTypeFont font;
@@ -417,9 +431,6 @@ public class Player implements Grafik {
                 sound = engiA.getSound();
             }
         }
-
-        // Masukin nama
-        String childName = "Ayam";
 
         // Buat objek Engimon baru dgn element dan nama di atas
         Engimon anak = new Engimon(childName, engiA.getName(), engiB.getName(), engiA.getSpecies(), engiB.getSpecies(), spc, 100, childElmt[0], childElmt[1], -1, -1, sound, 3);
